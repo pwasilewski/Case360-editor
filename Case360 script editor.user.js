@@ -4,7 +4,7 @@
 // @version      0.1
 // @author       P. Wasilewski
 // @description  Try to take over the world and make it a better place!
-// @match        http://vc146774.riziv.tstdev:8080/sonora/Admin?op=i
+// @match        */sonora/Admin?op=i
 // @require      https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js
 // @grant        none
 // ==/UserScript==
