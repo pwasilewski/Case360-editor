@@ -1,1 +1,9 @@
-# Case360-editor
+# Case360 "editor"
+
+## Description
+
+TODO
+
+## Installation
+
+TODO
