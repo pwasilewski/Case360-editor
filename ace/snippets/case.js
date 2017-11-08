@@ -2,8 +2,8 @@ ace.define("ace/snippets/case",["require","exports","module"], function(require,
 "use strict";
 
 exports.snippetText = "## Casefolders\n\
-snippet CreateNewCasefolders\n\
-	Casefolders ${1:cf} = new Casefolders(${2:template-name})${4:;}\n\
+snippet CreateNewCasefolder\n\
+	Casefolder ${1:cf} = new Casefolder(${2:template-name})${4:;}\n\
 snippet FindCasefolderById\n\
 	Casefolder.find(${1:decimalId})${2:;}\n\
 snippet FindCasefolderByRepoKey\n\
