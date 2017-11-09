@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Case360 script editor
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @author       P. Wasilewski
 // @description  Try to take over the world and make it a better place!
 // @match        */sonora/Admin?op=i
@@ -125,6 +125,7 @@ function GM_initializeEditor() {
         GM_EDITOR.id    = ACE_EDITOR_ID;
     $(GM_EDITOR).insertBefore(CASE_EDITOR_SELECTOR);
 
+    var langTools = ace.require("ace/ext/language_tools");
     editor = ace.edit(ACE_EDITOR_ID);
     editor.getSession().setMode(ACE_MODE);
     editor.setTheme(ACE_THEME);
@@ -157,7 +158,69 @@ function GM_initializeEditor() {
         compileScript();
         GM_compileScript();
     });
+
+    langTools.addCompleter(scriptsCompleter);
 }
+
+var scriptsCompleter = {
+    getCompletions: function(editor, session, pos, prefix, callback) {
+        if (prefix.length === 0) { callback(null, []); return ;}
+        if(!prefix.match(/\.$/)) {
+            return;
+        }
+
+        $.ajax({
+            type: "GET",
+            url: "CaseAjax?getmethods="+prefix.slice(0,-1),
+            dataType: "xml",
+            success: function(xml){
+                var completers = [];
+                if($(xml).find("responseXML").length == 1) {
+                    $(xml).find("class").each(function(){
+                        $(this).children().each(function(){
+                            var method		= prefix + $(this).text();
+                            var methodName 	= method.split('(')[0];
+                            var ar 			= method.match(/\((.*?)\)/);
+
+                            if (ar[1].length > 0) {
+                                var args = ar[1].split(",");
+                                var simplifiedArgs = "";
+                                var snippetArgs = "";
+                                $.each( args, function( index, value ) {
+                                    var arg = value.match(/(.+)\s+(.+)/);
+
+                                    var newArg  = arg[1].split('.').pop() + ' ' + arg[2];
+                                    var snippet = '${' + index + ':' + arg[2] + '}';
+
+                                    if(index > 0) {
+                                        simplifiedArgs += ',';
+                                        snippetArgs += ',';
+                                    }
+
+                                    simplifiedArgs += newArg;
+                                    snippetArgs += snippet;
+
+                                });
+
+                                simplifiedMethod = methodName + '(' + simplifiedArgs + ')';
+                                snippetMethod = methodName + '(' + snippetArgs + ')';
+
+                                completers.push({definition : simplifiedMethod, value : simplifiedMethod, snippet: snippetMethod, score : 1000, meta : 'method', type: 'method'});
+                            }
+                        });
+                    });
+                }
+                callback(null, completers); return ;
+            }
+        });
+    },
+    getDocTooltip: function(item) {
+        if (item.type == 'method' && !item.docHTML) {
+            item.docHTML = "<b>" + item.definition + "</b>";
+        }
+    }
+};
+
 
 $('#rightpane').bind('DOMSubtreeModified', function() {
     script = $('#scriptlocation').val();
