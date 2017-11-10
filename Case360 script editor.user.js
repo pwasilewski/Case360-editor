@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Case360 script editor
 // @namespace    http://tampermonkey.net/
-// @version      0.2
+// @version      0.1
 // @author       P. Wasilewski
 // @description  Try to take over the world and make it a better place!
 // @match        */sonora/Admin?op=i
@@ -206,10 +206,13 @@ var scriptsCompleter = {
                                 snippetMethod = methodName + '(' + snippetArgs + ')';
 
                                 completers.push({definition : simplifiedMethod, value : simplifiedMethod, snippet: snippetMethod, score : 1000, meta : 'method', type: 'method'});
+                            } else {
+                                completers.push({definition : method, value : method, snippet: method, score : 1000, meta : 'method', type: 'method'});
                             }
                         });
                     });
                 }
+
                 callback(null, completers); return ;
             }
         });
