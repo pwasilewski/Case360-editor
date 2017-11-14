@@ -1,13 +1,77 @@
 // ==UserScript==
 // @name         Case360 script editor
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @author       P. Wasilewski
 // @description  Try to take over the world and make it a better place!
 // @match        */sonora/Admin?op=i
 // @require      https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js
-// @grant        none
+// @require      https://openuserjs.org/src/libs/sizzle/GM_config.js
+// @grant        GM_getValue
+// @grant        GM_setValue
+// @grant        GM_log
+// @grant        GM_registerMenuCommand
 // ==/UserScript==
+
+GM_config.init({
+    'id'     : 'GM_config',
+    'title'  : 'Case360 script editor config',
+    'fields' : {
+        'theme' : {
+            'label'   : 'Theme',
+            'type'    : 'select',
+            'default' : 'piwi',
+            'options' : ['ambiance',
+                         'chaos',
+                         'chrome',
+                         'clouds',
+                         'clouds_midnight',
+                         'cobalt',
+                         'crimson_editor',
+                         'dawn',
+                         'dracula',
+                         'dreamweaver',
+                         'eclipse',
+                         'github',
+                         'gob',
+                         'gruvbox',
+                         'idle_fingers',
+                         'iplastic',
+                         'katzenmilch',
+                         'kr_theme',
+                         'kuroir',
+                         'merbivore',
+                         'merbivore_soft',
+                         'monokai',
+                         'mono_industrial',
+                         'notepad',
+                         'pastel_on_dark',
+                         'piwi',
+                         'solarized_dark',
+                         'solarized_light',
+                         'sqlserver',
+                         'terminal',
+                         'textmate',
+                         'tomorrow',
+                         'tomorrow_night',
+                         'tomorrow_night_blue',
+                         'tomorrow_night_bright',
+                         'tomorrow_night_eighties',
+                         'twilight',
+                         'vibrant_ink',
+                         'xcode']
+        },
+        'hline': {
+            'label': 'Show horizontal line',
+            'type': 'checkbox',
+            'default': true
+        }
+    }
+});
+
+GM_registerMenuCommand("Configure Case360 script editor", function(){
+  GM_config.open();
+});
 
 const CASE_EDITOR_ID          = "Script";
 const CASE_EDITOR_SELECTOR    = "#" + CASE_EDITOR_ID;
@@ -17,7 +81,7 @@ const ACE_CDN_URL             = "ace/ace.js";
 const ACE_EDITOR_ID           = "editor";
 const ACE_EDITOR_SELECTOR     = "#" + ACE_EDITOR_ID;
 const ACE_MODE                = "ace/mode/case";
-const ACE_THEME               = "ace/theme/piwi";
+const ACE_THEME               = "ace/theme/" + GM_config.get("theme");
 
 var done = false;
 var scriptName = "";
@@ -131,7 +195,8 @@ function GM_initializeEditor() {
 
     editor.setOptions({
         enableBasicAutocompletion: true,
-        enableSnippets : true
+        enableSnippets : true,
+        showPrintMargin : GM_config.get("hline")
     });
 
     editor.commands.addCommand({
