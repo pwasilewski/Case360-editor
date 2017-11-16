@@ -3,6 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      0.2
 // @author       P. Wasilewski
+// @collaborator B. Bergs
 // @description  Try to take over the world and make it a better place!
 // @match        */sonora/Admin?op=i
 // @require      https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js
