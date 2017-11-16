@@ -6,6 +6,9 @@
 // @collaborator B. Bergs
 // @description  Try to take over the world and make it a better place!
 // @match        */sonora/Admin?op=i
+// @supportURL   https://github.com/pwasilewski/Case360-editor
+// @updateURL    https://raw.githubusercontent.com/pwasilewski/Case360-editor/master/Case360%20script%20editor.user.js
+// @downloadURL  https://raw.githubusercontent.com/pwasilewski/Case360-editor/master/Case360%20script%20editor.user.js
 // @require      https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js
 // @require      https://openuserjs.org/src/libs/sizzle/GM_config.js
 // @grant        GM_getValue
