@@ -17,61 +17,9 @@
 // @grant        GM_registerMenuCommand
 // ==/UserScript==
 
-GM_config.init({
-    'id'     : 'GM_config',
-    'title'  : 'Case360 script editor config',
-    'fields' : {
-        'theme' : {
-            'label'   : 'Theme',
-            'type'    : 'select',
-            'default' : 'piwi',
-            'options' : ['ambiance',
-                         'chaos',
-                         'chrome',
-                         'clouds',
-                         'clouds_midnight',
-                         'cobalt',
-                         'crimson_editor',
-                         'dawn',
-                         'dracula',
-                         'dreamweaver',
-                         'eclipse',
-                         'github',
-                         'gob',
-                         'gruvbox',
-                         'idle_fingers',
-                         'iplastic',
-                         'katzenmilch',
-                         'kr_theme',
-                         'kuroir',
-                         'merbivore',
-                         'merbivore_soft',
-                         'monokai',
-                         'mono_industrial',
-                         'notepad',
-                         'pastel_on_dark',
-                         'piwi',
-                         'solarized_dark',
-                         'solarized_light',
-                         'sqlserver',
-                         'terminal',
-                         'textmate',
-                         'tomorrow',
-                         'tomorrow_night',
-                         'tomorrow_night_blue',
-                         'tomorrow_night_bright',
-                         'tomorrow_night_eighties',
-                         'twilight',
-                         'vibrant_ink',
-                         'xcode']
-        },
-        'hline': {
-            'label': 'Show horizontal line',
-            'type': 'checkbox',
-            'default': true
-        }
-    }
-});
+const ACE_CONFIG = '{"id":"GM_config","title":"Case360 script editor config","fields":{"theme":{"label":"Theme","type":"select","default":"piwi","options":["ambiance","chaos","chrome","clouds","clouds_midnight","cobalt","crimson_editor","dawn","dracula","dreamweaver","eclipse","github","gob","gruvbox","idle_fingers","iplastic","katzenmilch","kr_theme","kuroir","merbivore","merbivore_soft","monokai","mono_industrial","notepad","pastel_on_dark","piwi","solarized_dark","solarized_light","sqlserver","terminal","textmate","tomorrow","tomorrow_night","tomorrow_night_blue","tomorrow_night_bright","tomorrow_night_eighties","twilight","vibrant_ink","xcode"]},"hline":{"label":"Show horizontal line","type":"checkbox","default":true}}}';
+
+GM_config.init($.parseJSON (ACE_CONFIG));
 
 GM_registerMenuCommand("Configure Case360 script editor", function(){
   GM_config.open();
