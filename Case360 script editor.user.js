@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Case360 script editor
 // @namespace    http://tampermonkey.net/
-// @version      0.2
+// @version      0.3
 // @author       P. Wasilewski
 // @collaborator B. Bergs
 // @collaborator J. Elsen
@@ -142,6 +142,7 @@ function GM_initializeEditor() {
         GM_EDITOR.id    = ACE_EDITOR_ID;
     $(GM_EDITOR).insertBefore(CASE_EDITOR_SELECTOR);
 
+    var langTools = ace.require("ace/ext/language_tools");
     editor = ace.edit(ACE_EDITOR_ID);
     editor.getSession().setMode(ACE_MODE);
     editor.setTheme(ACE_THEME);
@@ -175,7 +176,49 @@ function GM_initializeEditor() {
         compileScript();
         GM_compileScript();
     });
+
+    langTools.addCompleter(scriptsCompleter);
 }
+
+var scriptsCompleter = {
+    getCompletions: function(editor, session, pos, prefix, callback) {
+        if (prefix.length === 0) { callback(null, []); return ;}
+        if(prefix.split(".") < 2) {
+            return;
+        }
+
+        prefix = prefix.substring(0, prefix.lastIndexOf("."));
+
+        $.ajax({
+            type: "GET",
+            url: "CaseAjax?getmethods=" + prefix,
+            dataType: "xml",
+            success: function(xml){
+                var completers = [];
+                if($(xml).find("responseXML").length == 1) {
+                    $(xml).find("class").each(function(){
+                        $(this).children().each(function(){
+                            var method		= prefix + "." + $(this).text();
+                            var methodName 	= method.split('(')[0];
+                            var args		= method.match(/\((.*?)\)/)[1];
+
+                            simplifiedMethod = getSimplifiedMethodFormat(methodName, args);
+                            snippetMethod = getSnippetMethodFormat(methodName, args);
+                            completers.push({definition : simplifiedMethod, value : simplifiedMethod, snippet: snippetMethod, score : 1000, meta : 'method', type: 'method'});
+                        });
+                    });
+                }
+
+                callback(null, completers); return ;
+            }
+        });
+    },
+    getDocTooltip: function(item) {
+        if (item.type == 'method' && !item.docHTML) {
+            item.docHTML = "<b>" + item.definition + "</b>";
+        }
+    }
+};
 
 $('#rightpane').bind('DOMSubtreeModified', function() {
     var script = $('#scriptlocation').val();
@@ -188,3 +231,55 @@ $('#rightpane').bind('DOMSubtreeModified', function() {
         GM_wait();
     }
 });
+
+/**
+ * Function to format the list of params and remove useless extension.
+ *
+ * E.g.: TST.updateActor(Object.PropertyManager.RepositoryObject.FormData actorFormdata, Object.PropertyManager.FmsRow updatedRow)
+ *
+ * @param {String} methodName The method name (e.g.: TST.updateActor)
+ * @param {String} argumentsString The list of arguments (e.g.: Object.PropertyManager.RepositoryObject.FormData actorFormdata, Object.PropertyManager.FmsRow updatedRow)
+ *
+ * @return {String} The format string. (e.g.: TST.updateActor(FormData actorFormdata, FmsRow updatedRow))
+ */
+function getSimplifiedMethodFormat(methodName, argumentsString) {
+    var result = [];
+    var simplified = [];
+    var args = argumentsString.split(",");
+
+    $.each( args, function( index, value ) {
+        var splitedArg = value.match(/(.+)\s+(.+)/);
+        if(splitedArg !== null) {
+            simplified.push(splitedArg[1].split('.').pop() + ' ' + splitedArg[2]);
+        }
+    });
+
+    result.push(methodName, "(", simplified.join(", ") ,")");
+    return result.join("");
+}
+
+/**
+ * Function to format the list of params allowing snippets and remove useless extension.
+ *
+ * E.g.: TST.updateActor(Object.PropertyManager.RepositoryObject.FormData actorFormdata, Object.PropertyManager.FmsRow updatedRow)
+ *
+ * @param {String} methodName The method name (e.g.: TST.updateActor)
+ * @param {String} argumentsString The list of arguments (e.g.: Object.PropertyManager.RepositoryObject.FormData actorFormdata, Object.PropertyManager.FmsRow updatedRow)
+ *
+ * @return {String} The format string. (e.g.: TST.updateActor(${1:actorFormdata}, ${2:updatedRow}))
+ */
+function getSnippetMethodFormat(methodName, argumentsString) {
+    var result = [];
+    var snippet = [];
+    var args = argumentsString.split(",");
+
+    $.each( args, function( index, value ) {
+        var splitedArg = value.match(/(.+)\s+(.+)/);
+        if(splitedArg !== null) {
+            snippet.push('${' + (index+1) + ':' + splitedArg[2] + '}');
+        }
+    });
+
+    result.push(methodName, "(", snippet.join(", ") ,")");
+    return result.join("");
+}
