@@ -4,6 +4,7 @@
 // @version      0.2
 // @author       P. Wasilewski
 // @collaborator B. Bergs
+// @collaborator J. Elsen
 // @description  Try to take over the world and make it a better place!
 // @match        */sonora/Admin?op=i
 // @supportURL   https://github.com/pwasilewski/Case360-editor
@@ -17,7 +18,7 @@
 // @grant        GM_registerMenuCommand
 // ==/UserScript==
 
-const ACE_CONFIG = '{"id":"GM_config","title":"Case360 script editor config","fields":{"theme":{"label":"Theme","type":"select","default":"piwi","options":["ambiance","chaos","chrome","clouds","clouds_midnight","cobalt","crimson_editor","dawn","dracula","dreamweaver","eclipse","github","gob","gruvbox","idle_fingers","iplastic","katzenmilch","kr_theme","kuroir","merbivore","merbivore_soft","monokai","mono_industrial","notepad","pastel_on_dark","piwi","solarized_dark","solarized_light","sqlserver","terminal","textmate","tomorrow","tomorrow_night","tomorrow_night_blue","tomorrow_night_bright","tomorrow_night_eighties","twilight","vibrant_ink","xcode"]},"hline":{"label":"Show horizontal line","type":"checkbox","default":true}}}';
+const ACE_CONFIG = '{"id":"GM_config","title":"Case360 script editor config","fields":{"repository":{"label":"Ace repository","type":"text","default":"ace/"},"theme":{"label":"Theme","type":"select","default":"piwi","options":["ambiance","chaos","chrome","clouds","clouds_midnight","cobalt","crimson_editor","dawn","dracula","dreamweaver","eclipse","github","gob","gruvbox","idle_fingers","iplastic","katzenmilch","kr_theme","kuroir","merbivore","merbivore_soft","monokai","mono_industrial","notepad","pastel_on_dark","piwi","solarized_dark","solarized_light","sqlserver","terminal","textmate","tomorrow","tomorrow_night","tomorrow_night_blue","tomorrow_night_bright","tomorrow_night_eighties","twilight","vibrant_ink","xcode"]},"hline":{"label":"Show horizontal line","type":"checkbox","default":true}}}';
 
 GM_config.init($.parseJSON (ACE_CONFIG));
 
@@ -29,14 +30,14 @@ const CASE_EDITOR_ID          = "Script";
 const CASE_EDITOR_SELECTOR    = "#" + CASE_EDITOR_ID;
 const URL_AJAX_COMPILE_SCRIPT = "CaseAjax?method=ScriptsHelper.compileScript";
 
-const ACE_CDN_URL             = "ace/ace.js";
-const ACE_LANG_CDN_URL        = "ace/ext-language_tools.js";
+const ACE_REPOSITORY          = GM_config.get("repository");
+const ACE_CDN_URL             = ACE_REPOSITORY + "ace.js";
+const ACE_LANG_CDN_URL        = ACE_REPOSITORY + "ext-language_tools.js";
 const ACE_EDITOR_ID           = "editor";
 const ACE_EDITOR_SELECTOR     = "#" + ACE_EDITOR_ID;
 const ACE_MODE                = "ace/mode/case";
 const ACE_THEME               = "ace/theme/" + GM_config.get("theme");
 
-var done = false;
 var scriptName = "";
 var editor;
 var ace_loaded = false;
@@ -64,7 +65,6 @@ function GM_getCompileResults(objRequestHttp) {
 function GM_showCompileResults(responseXML) {
     if (responseXML !== null) {
         var errorMsg = responseXML.getElementsByTagName("errormsg");
-        o_compileResults = document.getElementById("compileResults");
         var errorNode = errorMsg.item(0).firstChild;
         if (errorNode !== null) {
             var offsetPos = errorNode.nodeValue.lastIndexOf("near offset ");
@@ -178,7 +178,7 @@ function GM_initializeEditor() {
 }
 
 $('#rightpane').bind('DOMSubtreeModified', function() {
-    script = $('#scriptlocation').val();
+    var script = $('#scriptlocation').val();
     if($(CASE_EDITOR_SELECTOR).length !== 0 && scriptName != script) {
 
         scriptName = script;
