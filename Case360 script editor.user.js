@@ -1,13 +1,25 @@
 // ==UserScript==
 // @name         Case360 script editor
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.3
 // @author       P. Wasilewski
 // @description  Try to take over the world and make it a better place!
 // @match        */sonora/Admin?op=i
 // @require      https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js
-// @grant        none
+// @require      https://openuserjs.org/src/libs/sizzle/GM_config.js
+// @grant        GM_getValue
+// @grant        GM_setValue
+// @grant        GM_log
+// @grant        GM_registerMenuCommand
 // ==/UserScript==
+
+const ACE_CONFIG = '{"id":"GM_config","title":"Case360 script editor config","fields":{"theme":{"label":"Theme","type":"select","default":"piwi","options":["ambiance","chaos","chrome","clouds","clouds_midnight","cobalt","crimson_editor","dawn","dracula","dreamweaver","eclipse","github","gob","gruvbox","idle_fingers","iplastic","katzenmilch","kr_theme","kuroir","merbivore","merbivore_soft","monokai","mono_industrial","notepad","pastel_on_dark","piwi","solarized_dark","solarized_light","sqlserver","terminal","textmate","tomorrow","tomorrow_night","tomorrow_night_blue","tomorrow_night_bright","tomorrow_night_eighties","twilight","vibrant_ink","xcode"]},"hline":{"label":"Show horizontal line","type":"checkbox","default":true}}}';
+
+GM_config.init($.parseJSON(ACE_CONFIG));
+
+GM_registerMenuCommand("Configure Case360 script editor", function(){
+  GM_config.open();
+});
 
 const CASE_EDITOR_ID          = "Script";
 const CASE_EDITOR_SELECTOR    = "#" + CASE_EDITOR_ID;
@@ -17,7 +29,7 @@ const ACE_CDN_URL             = "ace/ace.js";
 const ACE_EDITOR_ID           = "editor";
 const ACE_EDITOR_SELECTOR     = "#" + ACE_EDITOR_ID;
 const ACE_MODE                = "ace/mode/case";
-const ACE_THEME               = "ace/theme/piwi";
+const ACE_THEME               = "ace/theme/" + GM_config.get("theme");
 
 var done = false;
 var scriptName = "";
@@ -132,7 +144,8 @@ function GM_initializeEditor() {
 
     editor.setOptions({
         enableBasicAutocompletion: true,
-        enableSnippets : true
+        enableSnippets : true,
+        showPrintMargin : GM_config.get("hline")
     });
 
     editor.commands.addCommand({
@@ -165,50 +178,28 @@ function GM_initializeEditor() {
 var scriptsCompleter = {
     getCompletions: function(editor, session, pos, prefix, callback) {
         if (prefix.length === 0) { callback(null, []); return ;}
-        if(!prefix.match(/\.$/)) {
+        if(prefix.split(".") < 2) {
             return;
         }
 
+        prefix = prefix.substring(0, prefix.lastIndexOf("."));
+
         $.ajax({
             type: "GET",
-            url: "CaseAjax?getmethods="+prefix.slice(0,-1),
+            url: "CaseAjax?getmethods=" + prefix,
             dataType: "xml",
             success: function(xml){
                 var completers = [];
                 if($(xml).find("responseXML").length == 1) {
                     $(xml).find("class").each(function(){
                         $(this).children().each(function(){
-                            var method		= prefix + $(this).text();
+                            var method		= prefix + "." + $(this).text();
                             var methodName 	= method.split('(')[0];
-                            var ar 			= method.match(/\((.*?)\)/);
+                            var args		= method.match(/\((.*?)\)/)[1];
 
-                            if (ar[1].length > 0) {
-                                var args = ar[1].split(",");
-                                var simplifiedArgs = "";
-                                var snippetArgs = "";
-                                $.each( args, function( index, value ) {
-                                    var arg = value.match(/(.+)\s+(.+)/);
-
-                                    var newArg  = arg[1].split('.').pop() + ' ' + arg[2];
-                                    var snippet = '${' + index + ':' + arg[2] + '}';
-
-                                    if(index > 0) {
-                                        simplifiedArgs += ',';
-                                        snippetArgs += ',';
-                                    }
-
-                                    simplifiedArgs += newArg;
-                                    snippetArgs += snippet;
-
-                                });
-
-                                simplifiedMethod = methodName + '(' + simplifiedArgs + ')';
-                                snippetMethod = methodName + '(' + snippetArgs + ')';
-
-                                completers.push({definition : simplifiedMethod, value : simplifiedMethod, snippet: snippetMethod, score : 1000, meta : 'method', type: 'method'});
-                            } else {
-                                completers.push({definition : method, value : method, snippet: method, score : 1000, meta : 'method', type: 'method'});
-                            }
+                            simplifiedMethod = getSimplifiedMethodFormat(methodName, args);
+                            snippetMethod = getSnippetMethodFormat(methodName, args);
+                            completers.push({definition : simplifiedMethod, value : simplifiedMethod, snippet: snippetMethod, score : 1000, meta : 'method', type: 'method'});
                         });
                     });
                 }
@@ -224,7 +215,6 @@ var scriptsCompleter = {
     }
 };
 
-
 $('#rightpane').bind('DOMSubtreeModified', function() {
     script = $('#scriptlocation').val();
     if($(CASE_EDITOR_SELECTOR).length !== 0 && scriptName != script) {
@@ -236,3 +226,55 @@ $('#rightpane').bind('DOMSubtreeModified', function() {
         GM_wait();
     }
 });
+
+/**
+ * Function to format the list of params and remove useless extension.
+ *
+ * E.g.: TST.updateActor(Object.PropertyManager.RepositoryObject.FormData actorFormdata, Object.PropertyManager.FmsRow updatedRow)
+ *
+ * @param {String} methodName The method name (e.g.: TST.updateActor)
+ * @param {String} argumentsString The list of arguments (e.g.: Object.PropertyManager.RepositoryObject.FormData actorFormdata, Object.PropertyManager.FmsRow updatedRow)
+ *
+ * @return {String} The format string. (e.g.: TST.updateActor(FormData actorFormdata, FmsRow updatedRow))
+ */
+function getSimplifiedMethodFormat(methodName, argumentsString) {
+    var result = [];
+    var simplified = [];
+    var args = argumentsString.split(",");
+
+    $.each( args, function( index, value ) {
+        var splitedArg = value.match(/(.+)\s+(.+)/);
+        if(splitedArg !== null) {
+            simplified.push(splitedArg[1].split('.').pop() + ' ' + splitedArg[2]);
+        }
+    });
+
+    result.push(methodName, "(", simplified.join(", ") ,")");
+    return result.join("");
+}
+
+/**
+ * Function to format the list of params allowing snippets and remove useless extension.
+ *
+ * E.g.: TST.updateActor(Object.PropertyManager.RepositoryObject.FormData actorFormdata, Object.PropertyManager.FmsRow updatedRow)
+ *
+ * @param {String} methodName The method name (e.g.: TST.updateActor)
+ * @param {String} argumentsString The list of arguments (e.g.: Object.PropertyManager.RepositoryObject.FormData actorFormdata, Object.PropertyManager.FmsRow updatedRow)
+ *
+ * @return {String} The format string. (e.g.: TST.updateActor(${1:actorFormdata}, ${2:updatedRow}))
+ */
+function getSnippetMethodFormat(methodName, argumentsString) {
+    var result = [];
+    var snippet = [];
+    var args = argumentsString.split(",");
+
+    $.each( args, function( index, value ) {
+        var splitedArg = value.match(/(.+)\s+(.+)/);
+        if(splitedArg !== null) {
+            snippet.push('${' + (index+1) + ':' + splitedArg[2] + '}');
+        }
+    });
+
+    result.push(methodName, "(", snippet.join(", ") ,")");
+    return result.join("");
+}
