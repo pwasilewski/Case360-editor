@@ -30,6 +30,7 @@ const CASE_EDITOR_SELECTOR    = "#" + CASE_EDITOR_ID;
 const URL_AJAX_COMPILE_SCRIPT = "CaseAjax?method=ScriptsHelper.compileScript";
 
 const ACE_CDN_URL             = "ace/ace.js";
+const ACE_LANG_CDN_URL        = "ace/ext-language_tools.js";
 const ACE_EDITOR_ID           = "editor";
 const ACE_EDITOR_SELECTOR     = "#" + ACE_EDITOR_ID;
 const ACE_MODE                = "ace/mode/case";
@@ -126,7 +127,7 @@ function GM_appendAceScript() {
 function GM_appendAutoCompleteScript() {
     if($("script[src$='ext-language_tools.js']").length === 0) {
         var ace_lang      = document.createElement('script');
-            ace_lang.src  = "ace/ext-language_tools.js";
+            ace_lang.src  = ACE_LANG_CDN_URL;
             ace_lang.type = 'text/javascript';
             ace_lang.onload = function() {
                 autocomplete_loaded = true;
