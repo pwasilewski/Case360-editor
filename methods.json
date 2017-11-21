@@ -6,32 +6,32 @@
         },
         {
             "signature":"addDiscussionTopic(String userId, Date postDate, String topic, String body)",
-            "definition":"Adds a new discussion topic to a casefolder. userId and postDate are used for the new discussion topic, to identify the user making the posting, and the creation date of the posting. If userId is null, the user of whatever scripting context is making the call is used. If postDate is null, then current date time is used.",
+            "definition":"Adds a new discussion topic to a casefolder.Â userIdÂ andÂ postDateÂ are used for the new discussion topic, to identify the user making the posting, and the creation date of the posting. IfÂ userIdÂ is null, the user of whatever scripting context is making the call is used. IfÂ postDateÂ is null, then current date time is used.",
             "meta":"Casefolder"
         },
         {
             "signature":"add(String displayName, String scriptName, RepositoryObject object, Boolean top)",
-            "definition":"Creates a new placeholder in the content list and returns the newly created placeholder as a Content object. If top is true, the new placeholder is the first entry in the contents list, if false, it is the last entry. The scriptName and the object may be null.",
+            "definition":"Creates a new placeholder in the content list and returns the newly created placeholder as aÂ ContentÂ object. If top is true, the new placeholder is the first entry in the contents list, if false, it is the last entry. TheÂ scriptNameÂ and the object may beÂ null.",
             "meta":"Contents"
         },
         {
             "signature":"add(String displayName, String scriptName, Object object, Object content)",
-            "definition":"Creates a new placeholder in the content list and returns the newly created placeholder as a Content object. The content parameter identifies an existing entry in the content list. The new placeholder is positioned following this existing entry. The scriptName and the object may be null.",
+            "definition":"Creates a new placeholder in the content list and returns the newly created placeholder as aÂ ContentÂ object. The content parameter identifies an existing entry in the content list. The new placeholder is positioned following this existing entry. TheÂ scriptNameÂ and the object may beÂ null.",
             "meta":"Contents"
         },
         {
             "signature":"addSection(String displayName, String scriptName)",
-            "definition":"Creates a new content section with the specified display name and script name, and inserts it at the bottom of the content list. Returns the newly created section as a Content object. The scriptName may be null. ",
+            "definition":"Creates a new content section with the specified display name and script name, and inserts it at the bottom of the content list. Returns the newly created section as a Content object. The scriptName may be null.Â ",
             "meta":"Contents"
         },
         {
             "signature":"addSection(String displayName, String scriptName, Boolean top)",
-            "definition":"Creates a new content section with the specified display name and script name in the content list. If top is true, the new content section will be inserted at the top of the content list. If top is false, the new content section will be inserted at the bottom of the content list. Returns the newly created section as a Content object. The scriptName and top may be null. ",
+            "definition":"Creates a new content section with the specified display name and script name in the content list. If top is true, the new content section will be inserted at the top of the content list. If top is false, the new content section will be inserted at the bottom of the content list. Returns the newly created section as a Content object. The scriptName and top may be null.Â ",
             "meta":"Contents"
         },
         {
             "signature":"addSection(String displayName, String scriptName, Object content)",
-            "definition":"Creates a new content section with the specified display name and script name in the content list. If content is specified, the new content section will be inserted after the specified content object. Returns the newly created section as a Content object. The scriptName and content may be null. ",
+            "definition":"Creates a new content section with the specified display name and script name in the content list. If content is specified, the new content section will be inserted after the specified content object. Returns the newly created section as a Content object. The scriptName and content may be null.Â ",
             "meta":"Contents"
         },
         {
@@ -41,7 +41,7 @@
         },
         {
             "signature":"get(String scriptName)",
-            "definition":"Returns a content object (placeholder), or null if there is no content item with the specified script name.",
+            "definition":"Returns a content object (placeholder), orÂ nullÂ if there is no content item with the specified script name.",
             "meta":"Contents"
         },
         {
@@ -121,32 +121,32 @@
         },
         {
             "signature":"clear()",
-            "definition":"Void, clears out a deadline and reinitializes it.",
+            "definition":"Void, clears out aÂ deadlineÂ and reinitializes it.",
             "meta":"Deadline"
         },
         {
             "signature":"getCalendarUnit()",
-            "definition":"Returns an integer, one of the UNIT_* static field values, indicating the calendar unit of the current definition, or null if isDefined() is false.",
+            "definition":"Returns an integer, one of theÂ UNIT_*Â static field values, indicating the calendar unit of the current definition, orÂ nullÂ ifÂ isDefined()Â isÂ false.",
             "meta":"Deadline"
         },
         {
             "signature":"getDuration()",
-            "definition":"Returns an integer, the number of calendar units set for the current definition, or null if isDefined() is false.",
+            "definition":"Returns an integer, the number of calendar units set for the current definition, orÂ nullÂ ifÂ isDefined()Â isÂ false.",
             "meta":"Deadline"
         },
         {
             "signature":"getTriggerComponentType()",
-            "definition":"Returns an integer, one of the TYPE_* static field values, indicating the trigger component type of the current definition, or null if isDefined() is false.",
+            "definition":"Returns an integer, one of theÂ TYPE_*Â static field values, indicating the trigger component type of the current definition, orÂ nullÂ ifÂ isDefined()Â isÂ false.",
             "meta":"Deadline"
         },
         {
             "signature":"getTriggerDate()",
-            "definition":"Returns a date, the date a relative deadline was triggered. Only relative deadlines have trigger dates, or null if isDefined() is false.",
+            "definition":"Returns a date, the date a relative deadline was triggered. Only relative deadlines have trigger dates, orÂ nullÂ ifÂ isDefined()Â isÂ false.",
             "meta":"Deadline"
         },
         {
             "signature":"getTriggerElementID()",
-            "definition":"Returns a BigDecimal, the trigger element ID of the current definition, or null if isDefined() is false.",
+            "definition":"Returns a BigDecimal, the trigger element ID of the current definition, orÂ nullÂ ifÂ isDefined()Â isÂ false.",
             "meta":"Deadline"
         },
         {
@@ -156,62 +156,62 @@
         },
         {
             "signature":"getTriggerEvent()",
-            "definition":"Returns an integer, one of the EVENT_* static field values, indicating the trigger event of the current definition, or null if isDefined() is false.",
+            "definition":"Returns an integer, one of theÂ EVENT_*Â static field values, indicating the trigger event of the current definition, orÂ nullÂ ifÂ isDefined()Â isÂ false.",
             "meta":"Deadline"
         },
         {
             "signature":"getWorkCalUseAssignee()",
-            "definition":"Returns a Boolean, flag indicating whether the work calendar of Assignee should be used, or null if isDefined() is false.",
+            "definition":"Returns a Boolean, flag indicating whether the work calendar of Assignee should be used, orÂ nullÂ ifÂ isDefined()Â isÂ false.",
             "meta":"Deadline"
         },
         {
             "signature":"getWorkCalName()",
-            "definition":"Returns a String, the name of the work calendar to use, or null to use the work calendar of the case, or null if isDefined() is false.",
+            "definition":"Returns a String, the name of theÂ work calendarÂ to use, orÂ nullÂ to use the work calendar of the case, orÂ nullÂ ifÂ isDefined()Â isÂ false.",
             "meta":"Deadline"
         },
         {
             "signature":"isBroken()",
-            "definition":"Returns a Boolean flag indicating whether the current state is \"broken\", or null if isDefined() is false.",
+            "definition":"Returns a BooleanÂ flag indicating whether the current state is \"broken\", orÂ nullÂ ifÂ isDefined()Â isÂ false.",
             "meta":"Deadline"
         },
         {
             "signature":"isDefined()",
-            "definition":"Returns a Boolean flag indicating whether the deadline is currently defined. If not defined, all other get* and is* methods return null.",
+            "definition":"Returns a BooleanÂ flag indicating whether the deadline is currently defined. If not defined, all otherÂ get*Â andÂ is*Â methods returnÂ null.",
             "meta":"Deadline"
         },
         {
             "signature":"isExpired()",
-            "definition":"Returns a Boolean flag indicating whether the current state is \"expired\", or null if isDefined() is false.",
+            "definition":"Returns a BooleanÂ flag indicating whether the current state is \"expired\", orÂ nullÂ ifÂ isDefined()Â isÂ false.",
             "meta":"Deadline"
         },
         {
             "signature":"isRelative()",
-            "definition":"Returns a Boolean flag indicating whether the deadline is defined as a relative deadline (rather than an absolute deadline), or null if isDefined() is false.",
+            "definition":"Returns a BooleanÂ flag indicating whether the deadline is defined as a relative deadline (rather than an absolute deadline), orÂ nullÂ ifÂ isDefined()Â isÂ false.",
             "meta":"Deadline"
         },
         {
             "signature":"isSatisfied()",
-            "definition":"Returns a Boolean flag indicating whether the current state is \"satisfied\", or null if isDefined() is false.",
+            "definition":"Returns a BooleanÂ flag indicating whether the current state is \"satisfied\", orÂ nullÂ ifÂ isDefined()Â isÂ false.",
             "meta":"Deadline"
         },
         {
             "signature":"isTriggered()",
-            "definition":"Returns a Boolean flag indicating whether the current state is \"triggered\", or null if isDefined() is false.",
+            "definition":"Returns a BooleanÂ flag indicating whether the current state is \"triggered\", orÂ nullÂ ifÂ isDefined()Â isÂ false.",
             "meta":"Deadline"
         },
         {
             "signature":"setAbsolute(Date date)",
-            "definition":"Void. Sets the deadline to an absolute definition, to the specified date/time.",
+            "definition":"Void.Â Sets the deadline to an absolute definition, to the specified date/time.",
             "meta":"Deadline"
         },
         {
             "signature":"setRelative(Integer duration, Integer calendarUnits, Integer triggerEvent, Decimal triggerElementId, String triggerElementName, Integer triggerComponentType)",
-            "definition":"Void. Sets the deadline to a relative definition. The duration is the integer value of the number of units; calendarUnits is one of UNIT_* static fields; triggerEvent is one of EVENT_* static fields; triggerElementID is the ID of the element that causes the trigger (content ID, task ID, or casefolder ID), triggerElementName is the name of trigger element; triggerComponentType is one of TYPE_* static fields.",
+            "definition":"Void.Â Sets the deadline to a relative definition. The duration is the integer value of the number of units;Â calendarUnitsÂ is one ofÂ UNIT_*Â static fields;Â triggerEventÂ is one ofÂ EVENT_*Â static fields;Â triggerElementIDÂ is the ID of the element that causes the trigger (content ID, task ID, or casefolder ID),Â triggerElementNameÂ is the name of trigger element;Â triggerComponentTypeÂ is one ofÂ TYPE_*Â static fields.",
             "meta":"Deadline"
         },
         {
             "signature":"setWorkCalendar(Boolean useAssignee, String workCalendarName)",
-            "definition":"Void. Sets the work calendar that will be used to do date calculations. If workCalendarName is null, the work calendar of the case is used.",
+            "definition":"Void.Â Sets the work calendar that will be used to do date calculations. IfÂ workCalendarNameÂ isÂ null, the work calendar of the case is used.",
             "meta":"Deadline"
         },
         {
@@ -241,12 +241,12 @@
         },
         {
             "signature":"getElement(String elementName)",
-            "definition":"Returns the object identified by elementName.",
+            "definition":"Returns the object identified byÂ elementName.",
             "meta":"JsonObject"
         },
         {
             "signature":"getElements(String elementName)",
-            "definition":"Returns the array of objects identified by elementName.",
+            "definition":"Returns the array of objects identified byÂ elementName.",
             "meta":"JsonObject"
         },
         {
@@ -256,7 +256,7 @@
         },
         {
             "signature":"get(Integer index)",
-            "definition":"Returns any, the value of the entry at the specified index in the list, or null if index is out of bounds",
+            "definition":"Returns any, the value of the entry at the specified index in the list, orÂ nullÂ if index is out of bounds",
             "meta":"List"
         },
         {
@@ -286,7 +286,7 @@
         },
         {
             "signature":"add()",
-            "definition":"Creates a new child instance, and returns the FieldGroup object representing the new instance.",
+            "definition":"Creates a new child instance, and returns theÂ FieldGroupÂ object representing the new instance.",
             "meta":"Relation"
         },
         {
@@ -401,7 +401,7 @@
         },
         {
             "signature":"split(String regex, Integer limit)",
-            "definition":"Same as above, except with a result threshold (see java.lang.String split method)",
+            "definition":"Same as above, except with a result threshold (seeÂ java.lang.StringÂ split method)",
             "meta":"String"
         },
         {
@@ -421,7 +421,7 @@
         },
         {
             "signature":"substring(Integer begin, Integer end)",
-            "definition":"Returns a string, the substring from the beginning index (inclusive) to the end index minus 1 ",
+            "definition":"Returns a string, the substring from the beginning index (inclusive) to the end index minus 1Â ",
             "meta":"String"
         },
         {
@@ -451,32 +451,32 @@
         },
         {
             "signature":"add(String displayName, String scriptName)",
-            "definition":"Creates a new task in the task list, and returns the newly created Task object. The new task is positioned at the end of the task list. The scriptName may be null.",
+            "definition":"Creates a new task in the task list, and returns the newly created Task object. The new task is positioned at the end of the task list. TheÂ scriptNameÂ may beÂ null.",
             "meta":"Tasks"
         },
         {
             "signature":"add(String displayName, String scriptName, Boolean top)",
-            "definition":"Creates a new task in the task list, and returns the newly created Task object. If top is true, the new task is the first entry in the task list, if false, it is the last entry. The scriptName may be null.",
+            "definition":"Creates a new task in the task list, and returns the newly created Task object. If top is true, the new task is the first entry in the task list, if false, it is the last entry. TheÂ scriptNameÂ may beÂ null.",
             "meta":"Tasks"
         },
         {
             "signature":"add(String displayName, String scriptName, Task task)",
-            "definition":"Creates a new task in the task list, and returns the newly created task. The task parameter identifies an existing entry in the task list. The new task is positioned following this existing entry. The scriptName may be null.",
+            "definition":"Creates a new task in the task list, and returns the newly created task. The task parameter identifies an existing entry in the task list. The new task is positioned following this existing entry. TheÂ scriptNameÂ may beÂ null.",
             "meta":"Tasks"
         },
         {
             "signature":"addSection(String displayName, String scriptName)",
-            "definition":"Creates a new task section with the specified display name and script name, and inserts it at the bottom of the task list. Returns the newly created section as a Task object. The scriptName may be null. ",
+            "definition":"Creates a new task section with the specified display name and script name, and inserts it at the bottom of the task list. Returns the newly created section as a Task object. The scriptName may be null.Â ",
             "meta":"Tasks"
         },
         {
             "signature":"addSection(String displayName, String scriptName, Boolean top)",
-            "definition":"Creates a new task section with the specified display name and script name in the task list. If top is true, the new task section will be inserted at the top of the task list. If top is false, the new task section will be inserted at the bottom of the task list. Returns the newly created section as a Task object. The scriptName and top may be null. ",
+            "definition":"Creates a new task section with the specified display name and script name in the task list. If top is true, the new task section will be inserted at the top of the task list. If top is false, the new task section will be inserted at the bottom of the task list. Returns the newly created section as a Task object. The scriptName and top may be null.Â ",
             "meta":"Tasks"
         },
         {
             "signature":"addSection(String displayName, String scriptName, Object task)",
-            "definition":"Creates a new task section with the specified display name and script name in the task list. If task is specified, the new task section will be inserted after the specified task object. Returns the newly created section as a Task object. The scriptName and content may be null. ",
+            "definition":"Creates a new task section with the specified display name and script name in the task list. If task is specified, the new task section will be inserted after the specified task object. Returns the newly created section as a Task object. The scriptName and content may be null.Â ",
             "meta":"Tasks"
         },
         {
@@ -486,7 +486,7 @@
         },
         {
             "signature":"get(String scriptName)",
-            "definition":"Returns a Task object identified by the script name, or null if there is no task with the specified script name.",
+            "definition":"Returns a Task object identified by the script name, orÂ nullÂ if there is no task with the specified script name.",
             "meta":"Tasks"
         },
         {
@@ -521,12 +521,12 @@
         },
         {
             "signature":"hasPermission(String acl, String permission, Object contextObject, String contextName)",
-            "definition":"Checks the user's privileges for the given permission in the given ACL, for the given object (usually a RepositoryObject) represented by the leading node specified in contextName (usually the string \"casefolder\", \"filestore\", \"formdata\", or \"workitem\"). Returns a Boolean true or false indicating access rights. ",
+            "definition":"Checks the user's privileges for the given permission in the given ACL, for the given object (usually aÂ RepositoryObject) represented by the leading node specified in contextName (usually the string \"casefolder\", \"filestore\", \"formdata\", or \"workitem\"). Returns a Boolean true or false indicating access rights.Â ",
             "meta":"User"
         },
         {
             "signature":"addRendition(String fileName)",
-            "definition":"Adds the specified file as a rendition of the document version represented by the Version object. The specified file name must be \"visible\" from the server.",
+            "definition":"Adds the specified file as a rendition of the document version represented by theÂ VersionÂ object. The specified file name must be \"visible\" from the server.",
             "meta":"Version"
         },
         {
@@ -551,32 +551,32 @@
         },
         {
             "signature":"now()",
-            "definition":"Returns a new Date, established in the time zone and locale of this calendar.",
+            "definition":"Returns a newÂ Date, established in the time zone and locale of this calendar.",
             "meta":"WorkCalendar"
         },
         {
             "signature":"date(Integer year, Integer month, Integer day)",
-            "definition":"Returns a new Date, established in the time zone and locale of this calendar.",
+            "definition":"Returns a newÂ Date, established in the time zone and locale of this calendar.",
             "meta":"WorkCalendar"
         },
         {
             "signature":"date(Integer year, Integer month, Integer day, Integer hour, Integer minute)",
-            "definition":"Returns a new Date, established in the time zone and locale of this calendar.",
+            "definition":"Returns a newÂ Date, established in the time zone and locale of this calendar.",
             "meta":"WorkCalendar"
         },
         {
             "signature":"date(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second)",
-            "definition":"Returns a new Date, established in the time zone and locale of this calendar.",
+            "definition":"Returns a newÂ Date, established in the time zone and locale of this calendar.",
             "meta":"WorkCalendar"
         },
         {
             "signature":"time(Integer hour, Integer minute)",
-            "definition":"Returns a new Date, established in the time zone and locale of this calendar.",
+            "definition":"Returns a newÂ Date, established in the time zone and locale of this calendar.",
             "meta":"WorkCalendar"
         },
         {
             "signature":"time(Integer hour, Integer minute, Integer second)",
-            "definition":"Returns a new Date, established in the time zone and locale of this calendar.",
+            "definition":"Returns a newÂ Date, established in the time zone and locale of this calendar.",
             "meta":"WorkCalendar"
         },
         {
@@ -606,17 +606,17 @@
         },
         {
             "signature":"isDayOff(Date date)",
-            "definition":"Returns a Boolean true or false, indicating whether the given date is a normally a work day but, due to an exception, is a non-work day with no work time.",
+            "definition":"Returns a BooleanÂ true or false, indicating whether the given date is a normally a work day but, due to an exception, is a non-work day with no work time.",
             "meta":"WorkCalendar"
         },
         {
             "signature":"isWorkDay(Date date)",
-            "definition":"Returns a Boolean true or false, indicating whether the given date is a work day. A work day is one that is either a normal work day as defined in the work calendar's work week, or is an exception within the calendar that is normally not a work day, but is defined as one within the exception. A day that is not a work day may still have some work time defined, separately from whether it is considered a work day.",
+            "definition":"Returns a BooleanÂ true or false, indicating whether the given date is a work day. A work day is one that is either a normal work day as defined in the work calendar's work week, or is an exception within the calendar that is normally not a work day, but is defined as one within the exception. A day that is not a work day may still have some work time defined, separately from whether it is considered a work day.",
             "meta":"WorkCalendar"
         },
         {
             "signature":"isDuringWorkTime(Date date)",
-            "definition":"Returns a Boolean true or false, indicating whether the given date represents a date and time that is within the work time of a work day.",
+            "definition":"Returns a BooleanÂ true or false, indicating whether the given date represents a date and time that is within the work time of a work day.",
             "meta":"WorkCalendar"
         },
         {
@@ -661,27 +661,27 @@
         },
         {
             "signature":"insertData(Integer offset, String str)",
-            "definition":"void. Inserts a string at the specified 16-bit unit offset. ",
+            "definition":"void. Inserts a string at the specified 16-bit unit offset.Â ",
             "meta":"XmlCharacterData"
         },
         {
             "signature":"replaceData(Integer offset, Integer count, String str)",
-            "definition":"void. Replaces the character starting at the specified 16-bit unit offset with the specified string. ",
+            "definition":"void. Replaces the character starting at the specified 16-bit unit offset with the specified string.Â ",
             "meta":"XmlCharacterData"
         },
         {
             "signature":"getElementById(String elementId)",
-            "definition":"Returns a XmlElement, the element whose ID is given by elementId, or null if no such element exists.",
+            "definition":"Returns a XmlElement, the element whose ID is given byÂ elementId, or null if no such element exists.",
             "meta":"XmlDocument"
         },
         {
             "signature":"getElementsByTagName(String tagName)",
-            "definition":"Returns a XmlElementList of all the XmlElement nodes with a given tagName in the order in which they are encountered in a preorder traversal of the document tree.",
+            "definition":"Returns a XmlElementListÂ of all theÂ XmlElementÂ nodes with a givenÂ tagNameÂ in the order in which they are encountered in a preorder traversal of the document tree.",
             "meta":"XmlDocument"
         },
         {
             "signature":"getElementsByTagNameNS(String namespaceURI, String localName)",
-            "definition":"Returns a XmlElementList of all the XmlElement nodes with a given local name and namespace URI in the order in which they are encountered in a preorder traversal of the document tree.",
+            "definition":"Returns a XmlElementListÂ of all theÂ XmlElementÂ nodes with a given local name and namespace URI in the order in which they are encountered in a preorder traversal of the document tree.",
             "meta":"XmlDocument"
         },
         {
@@ -731,22 +731,22 @@
         },
         {
             "signature":"createTextNode(String data)",
-            "definition":"Returns a XmlText, a newly created text node with the specified string.getElementById(elementId)",
+            "definition":"Returns a XmlText, a newly created text node with the specifiedÂ string.getElementById(elementId)",
             "meta":"XmlDocument"
         },
         {
             "signature":"importNode(XmlNode importedNode, Boolean deep)",
-            "definition":"Returns a XmlNode. Imports a node from another document to this document. Returns a node with no parent. The source node is not altered or removed from the original document; this method creates a new copy of the source node. See DOM Level 2 Core Specification for details.  ",
+            "definition":"Returns a XmlNode. Imports a node from another document to this document. Returns a node with no parent. The source node is not altered or removed from the original document; this method creates a new copy of the source node. See DOM Level 2 Core Specification for details.Â Â ",
             "meta":"XmlDocument"
         },
         {
             "signature":"getNode()",
-            "definition":"Returns a XmlNode, the node that will contain the result DOM tree. If no node is set, the node will be set by the transformation (an XmlDocument node) and may be obtained from this method once the transformation is complete. ",
+            "definition":"Returns a XmlNode, the node that will contain the result DOM tree. If no node is set, the node will be set by the transformation (anÂ XmlDocumentÂ node) and may be obtained from this method once the transformation is complete.Â ",
             "meta":"XmlDOMResult"
         },
         {
             "signature":"setNode(XmlNode node)",
-            "definition":"void, sets the node that will contain the result DOM tree. In practice, the node should be an XmlDocument, XmlDocumentFragment, or an XmlElement (i.e. a node that accepts children). ",
+            "definition":"void, sets the node that will contain the result DOM tree. In practice, the node should be anÂ XmlDocument,Â XmlDocumentFragment, or anÂ XmlElementÂ (i.e. a node that accepts children).Â ",
             "meta":"XmlDOMResult"
         },
         {
@@ -781,12 +781,12 @@
         },
         {
             "signature":"getElementsByTagName(String name)",
-            "definition":"Returns a XmlElementList, a collection of all descendant XmlElement nodes with a given tag name, in the order in which they are encountered in a preorder traversal of this XmlElement tree.",
+            "definition":"Returns a XmlElementList, a collection of all descendantÂ XmlElementÂ nodes with a given tag name, in the order in which they are encountered in a preorder traversal of thisÂ XmlElementÂ tree.",
             "meta":"XmlElement"
         },
         {
             "signature":"getElementsByTagNameNS(String namespaceURI, String localName)",
-            "definition":"Returns a XmlElementList, a collection of all descendant XmlElement nodes with a given local name and namespace URI, in the order in which they are encountered in a preorder traversal of this XmlElement tree. ",
+            "definition":"Returns a XmlElementList, a collection of all descendantÂ XmlElementÂ nodes with a given local name and namespace URI, in the order in which they are encountered in a preorder traversal of thisÂ XmlElementÂ tree.Â ",
             "meta":"XmlElement"
         },
         {
@@ -816,22 +816,22 @@
         },
         {
             "signature":"setAttribute(String name, String value)",
-            "definition":"void. Adds a new attribute. If an attribute with that name is already present, its value is changed to the new specified value. ",
+            "definition":"void. Adds a new attribute. If an attribute with that name is already present, its value is changed to the new specified value.Â ",
             "meta":"XmlElement"
         },
         {
             "signature":"setAttributeNode(XmlAttr newAttr)",
-            "definition":"Returns a XmlAttr. Adds a new attribute node. If an attribute with that name (nodeName) is already present, it is replaced by the new one. If the newAttr attribute replaces an existing attribute, the replaced XmlAttr node is returned, otherwise null is returned. ",
+            "definition":"Returns a XmlAttr. Adds a new attribute node. If an attribute with that name (nodeName) is already present, it is replaced by the new one. If theÂ newAttrÂ attribute replaces an existing attribute, the replacedÂ XmlAttrÂ node is returned, otherwise null is returned.Â ",
             "meta":"XmlElement"
         },
         {
             "signature":"setAttributeNodeNS(XmlAttr newAttr)",
-            "definition":"Returns a XmlAttr. Adds a new attribute. If an attribute with that local name and that namespace URI is already present in the element, it is replaced by the new one. If the newAttr attribute replaces an existing attribute, the replaced XmlAttr node is returned, otherwise null is returned.",
+            "definition":"Returns a XmlAttr. Adds a new attribute. If an attribute with that local name and that namespace URI is already present in the element, it is replaced by the new one. If theÂ newAttrÂ attribute replaces an existing attribute, the replacedÂ XmlAttrÂ node is returned, otherwise null is returned.",
             "meta":"XmlElement"
         },
         {
             "signature":"setAttributeNS(String namespaceURI, String qualifiedName, String value)",
-            "definition":"void. Adds a new attribute. If an attribute with the same local name and namespace URI is already present on the element, its prefix is changed to be the prefix part of the qualifiedName, and its value is changed to be the value parameter.",
+            "definition":"void. Adds a new attribute. If an attribute with the same local name and namespace URI is already present on the element, its prefix is changed to be the prefix part of theÂ qualifiedName, and its value is changed to be the value parameter.",
             "meta":"XmlElement"
         },
         {
@@ -851,12 +851,12 @@
         },
         {
             "signature":"item(Integer index)",
-            "definition":"Returns a XmlNode, the indexth item in the map. If index is greater than or equal to the number of nodes in this map, this returns null. ",
+            "definition":"Returns a XmlNode, theÂ indexthÂ item in the map. If index is greater than or equal to the number of nodes in this map, this returns null.Â ",
             "meta":"XmlNamedNodeMap"
         },
         {
             "signature":"removeNamedItem(String name)",
-            "definition":"Returns a XmlNode. Removes a node specified by name, and returns the node removed, if a node with such a name exists.  ",
+            "definition":"Returns a XmlNode. Removes a node specified by name, and returns the node removed, if a node with such a name exists. Â ",
             "meta":"XmlNamedNodeMap"
         },
         {
@@ -866,12 +866,12 @@
         },
         {
             "signature":"setNamedItem(XmlNode node)",
-            "definition":"Returns a XmlNode. Adds a node using its nodeName attribute. If a node with that name is already present in this map, it is replaced by the new one. If the new XmlNode replaces an existing node, the replaced XmlNode is returned, otherwise null is returned.",
+            "definition":"Returns a XmlNode. Adds a node using itsÂ nodeNameÂ attribute. If a node with that name is already present in this map, it is replaced by the new one. If the newÂ XmlNodeÂ replaces an existing node, the replacedÂ XmlNodeÂ is returned, otherwise null is returned.",
             "meta":"XmlNamedNodeMap"
         },
         {
             "signature":"setNamedItemNS(XmlNode node)",
-            "definition":"Returns a XmlNode. Adds a node using its namespaceURI and localName attributes. If a node with that local name and namespace URI is already present in this map, it is replaced by the new one. If the new XmlNode replaces an existing node, the replaced XmlNode is returned, otherwise null is returned.",
+            "definition":"Returns a XmlNode. Adds a node using itsÂ namespaceURIÂ andÂ localNameÂ attributes. If a node with that local name and namespace URI is already present in this map, it is replaced by the new one. If the newÂ XmlNodeÂ replaces an existing node, the replacedÂ XmlNodeÂ is returned, otherwiseÂ nullÂ is returned.",
             "meta":"XmlNamedNodeMap"
         },
         {
@@ -886,12 +886,12 @@
         },
         {
             "signature":"getChildNodes(String nodeName)",
-            "definition":"Returns a XmlNodeList that contains all child nodes that match the specified qualified name. If there are none, the list is empty containing no nodes.",
+            "definition":"Returns a XmlNodeListÂ that contains all child nodes that match the specified qualified name. If there are none, the list is empty containing no nodes.",
             "meta":"XmlNode"
         },
         {
             "signature":"getChildNodesNS(String namespaceURI, String localName)",
-            "definition":"Returns a XmlNodeList that contains all child nodes that match the specified namespace and local name. If there are none, the list is empty containing no nodes.",
+            "definition":"Returns a XmlNodeListÂ that contains all child nodes that match the specified namespace and local name. If there are none, the list is empty containing no nodes.",
             "meta":"XmlNode"
         },
         {
@@ -921,22 +921,22 @@
         },
         {
             "signature":"insertBefore(XmlNode newChild, XmlNode refChild)",
-            "definition":"Inserts the node newChild before the existing child node refChild. If refChild is null, inserts newChild at the end of the list of children. If newChild is an XmlDocumentFragment object, all of its children are inserted, in the same order, before refChild. If the newChild is already in the tree, it is first removed. Returns the XmlNode being inserted.",
+            "definition":"Inserts the nodeÂ newChildÂ before the existing child nodeÂ refChild.Â IfÂ refChildÂ is null, insertsÂ newChildÂ at the end of the list of children. IfÂ newChildÂ is anÂ XmlDocumentFragmentÂ object, all of its children are inserted, in the same order, beforeÂ refChild.Â If theÂ newChildÂ is already in the tree, it is first removed. Returns theÂ XmlNodeÂ being inserted.",
             "meta":"XmlNode"
         },
         {
             "signature":"normalize()",
-            "definition":"void. Puts all XmlText nodes in the full depth of the subtree underneath this node, into a normal form where only structure separates XmlText nodes. See Document Object Model (DOM) Level 2 Core Specification for details.",
+            "definition":"void. Puts allÂ XmlTextÂ nodes in the full depth of the subtree underneath this node, into a normal form where only structure separatesÂ XmlTextÂ nodes. SeeÂ Document Object Model (DOM) Level 2 Core SpecificationÂ for details.",
             "meta":"XmlNode"
         },
         {
             "signature":"removeChild(XmlNode oldChild)",
-            "definition":"Returns a XmlNode. Removes the child node indicated by oldChild from the list of children, and returns it.",
+            "definition":"Returns a XmlNode.Â Removes the child node indicated byÂ oldChildÂ from the list of children, and returns it.",
             "meta":"XmlNode"
         },
         {
             "signature":"replaceChild(XmlNode newChild, XmlNode oldChild)",
-            "definition":"Returns a XmlNode. Replaces the child node oldChild with newChild in the list of children, and returns the oldChild node. If newChild is an XmlDocumentFragment object, oldChild is replaced by all of the XmlDocumentFragment children, which are inserted in the same order. If the newChild is already in the tree, it is first removed.",
+            "definition":"Returns a XmlNode.Â Replaces the child nodeÂ oldChildÂ withÂ newChildÂ in the list of children, and returns theÂ oldChildÂ node. IfÂ newChildÂ is anÂ XmlDocumentFragmentÂ object,Â oldChildÂ is replaced by all of theÂ XmlDocumentFragmentÂ children, which are inserted in the same order. If theÂ newChildÂ is already in the tree, it is first removed.",
             "meta":"XmlNode"
         },
         {
@@ -946,27 +946,27 @@
         },
         {
             "signature":"item(Integer index)",
-            "definition":"Returns a XmlNode, the indexth item in the map. If index is greater than or equal to the number of nodes in this map, this returns null. ",
+            "definition":"Returns a XmlNode, theÂ indexthÂ item in the map. If index is greater than or equal to the number of nodes in this map, this returns null.Â ",
             "meta":"XmlNodeList"
         },
         {
             "signature":"getSystemId()",
-            "definition":"Returns a String, the system identifier that was set with setSystemId.",
+            "definition":"Returns a String, the system identifier that was set withÂ setSystemId.",
             "meta":"XmlResult"
         },
         {
             "signature":"setSystemId(String systemId)",
-            "definition":"void. Sets the system identifier for this source. The system identifier is optional if the source does not get its data from a URL, but it may still be useful to provide one. The application can use a system identifier, for example, to resolve relative URIs and to include in error messages and warnings. ",
+            "definition":"void. Sets the system identifier for this source. The system identifier is optional if the source does not get its data from a URL, but it may still be useful to provide one. The application can use a system identifier, for example, to resolve relative URIs and to include in error messages and warnings.Â ",
             "meta":"XmlResult"
         },
         {
             "signature":"getSystemId()",
-            "definition":"Returns a String, the system identifier that was set with setSystemId.",
+            "definition":"Returns a String, the system identifier that was set withÂ setSystemId.",
             "meta":"XmlSource"
         },
         {
             "signature":"setSystemId(String systemId)",
-            "definition":"void. Sets the system identifier for this source. The system identifier is optional if the source does not get its data from a URL, but it may still be useful to provide one. The application can use a system identifier, for example, to resolve relative URIs and to include in error messages and warnings. ",
+            "definition":"void. Sets the system identifier for this source. The system identifier is optional if the source does not get its data from a URL, but it may still be useful to provide one. The application can use a system identifier, for example, to resolve relative URIs and to include in error messages and warnings.Â ",
             "meta":"XmlSource"
         },
         {
@@ -976,27 +976,27 @@
         },
         {
             "signature":"splitText(Integer offset)",
-            "definition":"Returns a XmlText. Breaks this node into two nodes at the specified offset, keeping both in the tree as siblings, and returns the new node. When the offset is equal to the length of this node, the new node has no data.  ",
+            "definition":"Returns a XmlText. Breaks this node into two nodes at the specified offset, keeping both in the tree as siblings, and returns the new node. When the offset is equal to the length of this node, the new node has no data.Â Â ",
             "meta":"XmlText"
         },
         {
             "signature":"clearParameters()",
-            "definition":"void. Clears all parameters set with setParameter. ",
+            "definition":"void. Clears all parameters set withÂ setParameter.Â ",
             "meta":"XmlTransformer"
         },
         {
             "signature":"getOutputProperty(String name)",
-            "definition":"Returns a String, the value of the specified output parameter that is in effect for the transformation. See XmlOutputKeys for static property names. A namespace qualified name may be passed, with the URI enclosed in curly braces, followed by the local name.  ",
+            "definition":"Returns a String, the value of the specified output parameter that is in effect for the transformation. SeeÂ XmlOutputKeysÂ for static property names. A namespace qualified name may be passed, with the URI enclosed in curly braces, followed by the local name.Â Â ",
             "meta":"XmlTransformer"
         },
         {
             "signature":"setOutputProperty(String name, String value)",
-            "definition":"void. Sets an output parameter that will be in effect for the transformation. See XmlOutputKeys for static property names. A namespace qualified name may be passed, with the URI enclosed in curly braces, followed by the local name. ",
+            "definition":"void. Sets an output parameter that will be in effect for the transformation. SeeÂ XmlOutputKeysÂ for static property names. A namespace qualified name may be passed, with the URI enclosed in curly braces, followed by the local name.Â ",
             "meta":"XmlTransformer"
         },
         {
             "signature":"setParameter(String name, value)",
-            "definition":"void. Adds a parameter for the transformation. . A namespace qualified name may be passed, with the URI enclosed in curly braces, followed by the local name. The value may String, Boolean, Integer, Long, BigDecimal, Date, or Object. ",
+            "definition":"void. Adds a parameter for the transformation. . A namespace qualified name may be passed, with the URI enclosed in curly braces, followed by the local name. The value mayÂ String,Â Boolean,Â Integer,Â Long,Â BigDecimal,Â Date, orÂ Object.Â ",
             "meta":"XmlTransformer"
         },
         {
@@ -1016,7 +1016,7 @@
         },
         {
             "signature":"item(Integer index)",
-            "definition":"Returns a XmlNode, the indexth item in the map. If index is greater than or equal to the number of nodes in this map, this returns null. ",
+            "definition":"Returns a XmlNode, theÂ indexthÂ item in the map. If index is greater than or equal to the number of nodes in this map, this returns null.",
             "meta":"XmlNamedNodeMap"
         }
     ]
