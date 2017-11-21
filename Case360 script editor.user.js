@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Case360 script editor
 // @namespace    http://tampermonkey.net/
-// @version      0.3
+// @version      0.4
 // @author       P. Wasilewski
 // @collaborator B. Bergs
 // @collaborator J. Elsen
@@ -10,6 +10,8 @@
 // @supportURL   https://github.com/pwasilewski/Case360-editor
 // @updateURL    https://raw.githubusercontent.com/pwasilewski/Case360-editor/master/Case360%20script%20editor.user.js
 // @downloadURL  https://raw.githubusercontent.com/pwasilewski/Case360-editor/master/Case360%20script%20editor.user.js
+// @resource     functions https://raw.githubusercontent.com/pwasilewski/Case360-editor/v0.4/functions.json
+// @grant        GM_getResourceText
 // @require      https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js
 // @require      https://openuserjs.org/src/libs/sizzle/GM_config.js
 // @grant        GM_getValue
@@ -178,6 +180,7 @@ function GM_initializeEditor() {
     });
 
     langTools.addCompleter(scriptsCompleter);
+    langTools.addCompleter(functionsCompleter);
 }
 
 var scriptsCompleter = {
@@ -220,6 +223,31 @@ var scriptsCompleter = {
     }
 };
 
+var functionsCompleter = {
+    getCompletions: function(editor, session, pos, prefix, callback) {
+        if(prefix.indexOf(".") !== -1) {
+            return;
+        }
+
+        var myPrototype = GM_getResourceText("functions", "json");
+
+        callback(null, JSON.parse(myPrototype).functions.map(function(func) {
+            var method		= func.signature;
+            var methodName 	= method.split('(')[0];
+            var args		= method.match(/\((.*?)\)/)[1];
+
+            simplifiedMethod = getSimplifiedMethodFormat(methodName, args);
+            snippetMethod = getSnippetMethodFormat(methodName, args);
+            return {definition: simplifiedMethod, value: simplifiedMethod, snippet: snippetMethod, score: 1000, meta : 'function', type: 'function'};
+        }));
+    },
+    getDocTooltip: function(item) {
+        if (item.type == 'method' && !item.docHTML) {
+            item.docHTML = "<b>" + item.definition + "</b>";
+        }
+    }
+};
+
 $('#rightpane').bind('DOMSubtreeModified', function() {
     var script = $('#scriptlocation').val();
     if($(CASE_EDITOR_SELECTOR).length !== 0 && scriptName != script) {
@@ -251,6 +279,8 @@ function getSimplifiedMethodFormat(methodName, argumentsString) {
         var splitedArg = value.match(/(.+)\s+(.+)/);
         if(splitedArg !== null) {
             simplified.push(splitedArg[1].split('.').pop() + ' ' + splitedArg[2]);
+        } else {
+            simplified.push(value.trim());
         }
     });
 
@@ -277,6 +307,8 @@ function getSnippetMethodFormat(methodName, argumentsString) {
         var splitedArg = value.match(/(.+)\s+(.+)/);
         if(splitedArg !== null) {
             snippet.push('${' + (index+1) + ':' + splitedArg[2] + '}');
+        } else {
+            snippet.push('${' + (index+1) + ':' + value.trim() + '}');
         }
     });
 
