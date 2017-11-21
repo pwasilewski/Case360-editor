@@ -1,16 +1,16 @@
 {
-    "function":[
+    "functions":[
         {
             "signature":"date(year, month, day)",
             "definition":"A date with the specified year, month, and day."
         },
         {
             "signature":"date(year, month, day, hour, minute)",
-            "definition":"A date with the specified year, month, and day and time."
+            "definition":"A date with the specified year, month, and day andÂ time."
         },
         {
             "signature":"date(year, month, day, hour, minute, second)",
-            "definition":"A date with the specified year, month, and day and time including seconds."
+            "definition":"A date with the specified year, month, and day andÂ timeÂ including seconds."
         },
         {
             "signature":"dateEaster(year)",
@@ -18,15 +18,15 @@
         },
         {
             "signature":"time(hour, minute)",
-            "definition":"A time with the specified hour and minute (hours are specified as a 24 hour clock)."
+            "definition":"AÂ timeÂ with the specified hour and minute (hours are specified as a 24 hour clock)."
         },
         {
             "signature":"time(hour, minute, second)",
-            "definition":"A time with the specified hour, minute and second."
+            "definition":"AÂ timeÂ with the specified hour, minute and second."
         },
         {
             "signature":"time(timezone, locale, hour, minute)",
-            "definition":"A time with the specified hour and minute (hours are specified as a 24 hour clock), in the specified timezone and locale."
+            "definition":"AÂ timeÂ with the specified hour and minute (hours are specified as a 24 hour clock), in the specified timezone and locale."
         },
         {
             "signature":"optional(arg)",
@@ -46,7 +46,7 @@
         },
         {
             "signature":"countTrueN(list1)",
-            "definition":"The null aware version of countTrue returns a range of possible true counts, with the lower value the number of entries in the list that are currently true, and the higher value the currently true count, plus the count of entries that are currently null."
+            "definition":"The null aware versionÂ of countTrue returns a range of possible true counts, with the lower value the number of entries in the list that are currently true, and the higher value the currently true count, plus the count of entries that are currently null."
         },
         {
             "signature":"percentTrue(list)",
@@ -54,7 +54,7 @@
         },
         {
             "signature":"percentTrueN(list)",
-            "definition":"The null aware version of percentTrue returns a range of possible percentages, with the lower value the percentage of entries in the list that are currently true, and the higher value the percentage of entries that are true or null (that may become true when filled in)."
+            "definition":"The null aware versionÂ of percentTrue returns a range of possible percentages, with the lower value the percentage of entries in the list that are currently true, and the higher value the percentage of entries that are true or null (that may become true when filled in)."
         },
         {
             "signature":"sum(list)",
@@ -62,7 +62,7 @@
         },
         {
             "signature":"sumN(list)",
-            "definition":"The null aware version of sum returns null if any value in the list is null."
+            "definition":"The null aware versionÂ of sum returns null if any value in the list is null."
         },
         {
             "signature":"average(list)",
@@ -70,7 +70,7 @@
         },
         {
             "signature":"averageN(list)",
-            "definition":"The null aware version of average returns null if any value in the list is null."
+            "definition":"The null aware versionÂ of averageÂ returns null if any value in the list is null."
         },
         {
             "signature":"median(list)",
@@ -78,7 +78,7 @@
         },
         {
             "signature":"medianN(list)",
-            "definition":"The null aware version of median returns null if any value in the list is null."
+            "definition":"The null aware versionÂ of medianÂ returns null if any value in the list is null."
         },
         {
             "signature":"min(list)",
@@ -86,7 +86,7 @@
         },
         {
             "signature":"minN(list)",
-            "definition":"The null aware version of min returns null if any value in the list is null."
+            "definition":"The null aware versionÂ of minÂ returns null if any value in the list is null."
         },
         {
             "signature":"max(list)",
@@ -94,15 +94,15 @@
         },
         {
             "signature":"maxN(list)",
-            "definition":"The null aware version of max returns null if any value in the list is null."
+            "definition":"The null aware version ofÂ maxÂ returns null if any value in the list is null."
         },
         {
             "signature":"mode(list)",
-            "definition":"This function returns the mode of the specified list. The mode is the most frequently occurring value in the list. This function supports integer, long, decimal or date lists. If two values occur the same number of times, it returns the value that occurs first in a sorted list of the values. If no value occurs more than once, it returns null. Any null values are ignored. "
+            "definition":"This function returns the mode of the specified list. The mode is the most frequently occurring value in the list. This function supports integer, long, decimal or date lists. If two values occur the same number of times, it returns the value that occurs first in a sorted list of the values. If no value occurs more than once, it returns null. Any null values are ignored.Â "
         },
         {
             "signature":"modeN(list)",
-            "definition":"The null aware version of mode may return a value even if nulls exist in the list, if the leading candidate has an overwhelming lead (if it occurs more frequently than the next leading candidate plus the number of null values)."
+            "definition":"The null aware versionÂ of modeÂ may return a value even if nulls exist in the list, if the leading candidate has an overwhelming lead (if it occurs more frequently than the next leading candidate plus the number of null values)."
         },
         {
             "signature":"traceOn(String logFolder)",
@@ -126,7 +126,7 @@
         },
         {
             "signature":"error(String message)",
-            "definition":"Void, terminates the script with the specified error message. When called from a the catch block of a try-catch statement, this will throw a new UtilityException with the original exception linked in as the initCause. If the message is null, then the original exception is rethrown."
+            "definition":"Void, terminates the script with the specified error message. When called from a the catch block of aÂ try-catch statement, this will throw a new UtilityException with the original exception linked in as the initCause. If the message is null, then the original exception is rethrown."
         },
         {
             "signature":"error(String category, String message)",
@@ -134,11 +134,11 @@
         },
         {
             "signature":"doQuery(String queryScriptName)",
-            "definition":"Returns FmsRowSet with the collection of result rows."
+            "definition":"ReturnsÂ FmsRowSetÂ with the collection of result rows."
         },
         {
             "signature":"doQuery(String queryScriptName, PropertyMap parameters)",
-            "definition":"Returns FmsRowSet with the collection of result rows."
+            "definition":"ReturnsÂ FmsRowSetÂ with the collection of result rows."
         }
     ]
 }
