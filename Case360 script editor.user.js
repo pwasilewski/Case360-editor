@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Case360 script editor
+// @name         Case360 script editor - DEV
 // @namespace    http://tampermonkey.net/
 // @version      0.4
 // @author       P. Wasilewski
@@ -11,6 +11,7 @@
 // @updateURL    https://raw.githubusercontent.com/pwasilewski/Case360-editor/master/Case360%20script%20editor.user.js
 // @downloadURL  https://raw.githubusercontent.com/pwasilewski/Case360-editor/master/Case360%20script%20editor.user.js
 // @resource     functions https://raw.githubusercontent.com/pwasilewski/Case360-editor/v0.4/functions.json
+// @resource     caseMethods https://raw.githubusercontent.com/pwasilewski/Case360-editor/v0.4/methods.json
 // @grant        GM_getResourceText
 // @require      https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js
 // @require      https://openuserjs.org/src/libs/sizzle/GM_config.js
@@ -181,6 +182,7 @@ function GM_initializeEditor() {
 
     langTools.addCompleter(scriptsCompleter);
     langTools.addCompleter(functionsCompleter);
+    langTools.addCompleter(methodsCompleter);
 }
 
 var scriptsCompleter = {
@@ -207,7 +209,7 @@ var scriptsCompleter = {
 
                             simplifiedMethod = getSimplifiedMethodFormat(methodName, args);
                             snippetMethod = getSnippetMethodFormat(methodName, args);
-                            completers.push({definition : simplifiedMethod, value : simplifiedMethod, snippet: snippetMethod, score : 1000, meta : 'method', type: 'method'});
+                            completers.push({definition : simplifiedMethod, value : simplifiedMethod, snippet: snippetMethod, score : 1000, meta : 'script', type: 'script'});
                         });
                     });
                 }
@@ -217,8 +219,9 @@ var scriptsCompleter = {
         });
     },
     getDocTooltip: function(item) {
-        if (item.type == 'method' && !item.docHTML) {
-            item.docHTML = "<b>" + item.definition + "</b>";
+        if (item.type == 'script' && !item.docHTML) {
+            var scriptIcon = "<span style=\"background: red;display: inline-block;border-radius: 50%;height: 13px;width: 13px;font-size: 11px;line-height: 14px;text-align: center;color: white;\"><i>s</i></span>";
+            item.docHTML = "<h5 style=\"margin:0px;\">" + scriptIcon + " <i>Scripts</i> - " + item.definition + "</h5>";
         }
     }
 };
@@ -229,21 +232,63 @@ var functionsCompleter = {
             return;
         }
 
-        var myPrototype = GM_getResourceText("functions", "json");
+        var functionsFile = GM_getResourceText("functions", "json");
 
-        callback(null, JSON.parse(myPrototype).functions.map(function(func) {
+        callback(null, JSON.parse(functionsFile).functions.map(function(func) {
             var method		= func.signature;
             var methodName 	= method.split('(')[0];
             var args		= method.match(/\((.*?)\)/)[1];
 
             simplifiedMethod = getSimplifiedMethodFormat(methodName, args);
             snippetMethod = getSnippetMethodFormat(methodName, args);
-            return {definition: simplifiedMethod, value: simplifiedMethod, snippet: snippetMethod, score: 1000, meta : 'function', type: 'function'};
+            return {definition: func.definition, value: simplifiedMethod, snippet: snippetMethod, score: 1000, meta : 'function', type: 'function'};
+        }));
+    },
+    getDocTooltip: function(item) {
+        if (item.type == 'function' && !item.docHTML) {
+            var functionIcon = "<span style=\"background: #7c7;display: inline-block;border-radius: 50%;height: 13px;width: 13px;font-size: 11px;line-height: 14px;text-align: center;color: white;\"><i>f</i></span>";
+            item.docHTML = "<h5 style=\"margin:0px;\">" + functionIcon + " <i>Function</i> - " + item.value + "</h5> <p style=\"margin:0px;word-wrap:break-word;\">" + item.definition + "</p>";
+        }
+    }
+};
+
+var methodsCompleter = {
+    getCompletions: function(editor, session, pos, prefix, callback) {
+        if(prefix.indexOf(".") === -1) {
+            return;
+        }
+
+        var isScriptSearch = false;
+        $.ajax({
+            type: "GET",
+            url: "CaseAjax?getmethods=" + prefix.substring(0, prefix.lastIndexOf(".")),
+            dataType: "xml",
+            async: false,
+            success: function(xml){
+                isScriptSearch = $(xml).find("responseXML").length == 1;
+            }
+        });
+
+        if(isScriptSearch) {
+            return;
+        }
+
+        var methodsFile = GM_getResourceText("caseMethods", "json");
+
+        callback(null, JSON.parse(methodsFile).methods.map(function(met) {
+            var method		= prefix + met.signature;
+            var methodName 	= method.split('(')[0];
+            var args		= method.match(/\((.*?)\)/)[1];
+
+            simplifiedMethod = getSimplifiedMethodFormat(methodName, args);
+            snippetMethod = getSnippetMethodFormat(methodName, args);
+            return {definition: met.definition, value: simplifiedMethod, snippet: snippetMethod, score: 1000, meta : met.meta, type: 'method'};
         }));
     },
     getDocTooltip: function(item) {
         if (item.type == 'method' && !item.docHTML) {
-            item.docHTML = "<b>" + item.definition + "</b>";
+            var methodIcon = "<span style=\"background: #CC00CC;display: inline-block;border-radius: 50%;height: 13px;width: 13px;font-size: 11px;line-height: 14px;text-align: center;color: white;\"><i>m</i></span>";
+            item.docHTML = "<h5 style=\"margin:0px;\">" + methodIcon + " <i>" + item.meta + "</i> - " + item.value + "</h5> <p style=\"margin:0px;word-wrap:break-word;\">" + item.definition + "</p>";
         }
     }
 };
