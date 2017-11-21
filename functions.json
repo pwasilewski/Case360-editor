@@ -29,6 +29,14 @@
             "definition":"A time with the specified hour and minute (hours are specified as a 24 hour clock), in the specified timezone and locale."
         },
         {
+            "signature":"time(timezone, locale, hour, minute)",
+            "definition":"A time with the specified hour and minute (hours are specified as a 24 hour clock), in the specified timezone and locale."
+        },
+        {
+            "signature":"time(timezone, locale, hour, minute, second)",
+            "definition":"A time with the specified hour and minute and second (hours are specified as a 24 hour clock), in the specified timezone and locale."
+        },
+        {
             "signature":"optional(arg)",
             "definition":"If arg is not null, returns arg, otherwise depends on the variable's type."
         },
