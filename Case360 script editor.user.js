@@ -187,150 +187,6 @@ function GM_initializeEditor() {
     langTools.addCompleter(staticFunctionsCompleter);
 }
 
-var scriptsCompleter = {
-    getCompletions: function(editor, session, pos, prefix, callback) {
-        if (prefix.length === 0) { callback(null, []); return ;}
-        if(prefix.split(".") < 2) {
-            return;
-        }
-
-        prefix = prefix.substring(0, prefix.lastIndexOf("."));
-
-        $.ajax({
-            type: "GET",
-            url: "CaseAjax?getmethods=" + prefix,
-            dataType: "xml",
-            success: function(xml){
-                var completers = [];
-                if($(xml).find("responseXML").length == 1) {
-                    $(xml).find("class").each(function(){
-                        $(this).children().each(function(){
-                            var method		= prefix + "." + $(this).text();
-                            var methodName 	= method.split('(')[0];
-                            var args		= method.match(/\((.*?)\)/)[1];
-
-                            simplifiedMethod = getSimplifiedMethodFormat(methodName, args);
-                            snippetMethod = getSnippetMethodFormat(methodName, args);
-                            completers.push({definition : simplifiedMethod, value : simplifiedMethod, snippet: snippetMethod, score : 1000, meta : 'script', type: 'script'});
-                        });
-                    });
-                }
-
-                callback(null, completers); return ;
-            }
-        });
-    },
-    getDocTooltip: function(item) {
-        if (item.type == 'script' && !item.docHTML) {
-            var scriptIcon = "<span style=\"background: red;display: inline-block;border-radius: 50%;height: 13px;width: 13px;font-size: 11px;line-height: 14px;text-align: center;color: white;\"><i>s</i></span>";
-            item.docHTML = "<h5 style=\"margin:0px;\">" + scriptIcon + " <i>Scripts</i> - " + item.definition + "</h5>";
-        }
-    }
-};
-
-var functionsCompleter = {
-    getCompletions: function(editor, session, pos, prefix, callback) {
-        if(prefix.indexOf(".") !== -1) {
-            return;
-        }
-
-        var functionsFile = GM_getResourceText("functions", "json");
-
-        callback(null, JSON.parse(functionsFile).functions.map(function(func) {
-            var method		= func.signature;
-            var methodName 	= method.split('(')[0];
-            var args		= method.match(/\((.*?)\)/)[1];
-
-            simplifiedMethod = getSimplifiedMethodFormat(methodName, args);
-            snippetMethod = getSnippetMethodFormat(methodName, args);
-            return {definition: func.definition, value: simplifiedMethod, snippet: snippetMethod, score: 1000, meta : 'function', type: 'function'};
-        }));
-    },
-    getDocTooltip: function(item) {
-        if (item.type == 'function' && !item.docHTML) {
-            var functionIcon = "<span style=\"background: #7c7;display: inline-block;border-radius: 50%;height: 13px;width: 13px;font-size: 11px;line-height: 14px;text-align: center;color: white;\"><i>f</i></span>";
-            item.docHTML = "<h5 style=\"margin:0px;\">" + functionIcon + " <i>Function</i> - " + item.value + "</h5> <p style=\"margin:0px;word-wrap:break-word;\">" + item.definition + "</p>";
-        }
-    }
-};
-
-var methodsCompleter = {
-    getCompletions: function(editor, session, pos, prefix, callback) {
-        if(prefix.indexOf(".") === -1) {
-            return;
-        }
-
-        prefix = prefix.substring(0, prefix.lastIndexOf("."));
-
-        var isScriptSearch = false;
-        $.ajax({
-            type: "GET",
-            url: "CaseAjax?getmethods=" + prefix,
-            dataType: "xml",
-            async: false,
-            success: function(xml){
-                isScriptSearch = $(xml).find("responseXML").length == 1;
-            }
-        });
-
-        if(isScriptSearch) {
-            return;
-        }
-
-        var methodsFile = GM_getResourceText("caseMethods", "json");
-
-        prefix += ".";
-
-        callback(null, JSON.parse(methodsFile).methods.map(function(met) {
-            var method		= prefix + met.signature;
-            var methodName 	= method.split('(')[0];
-            var args		= method.match(/\((.*?)\)/)[1];
-
-            simplifiedMethod = getSimplifiedMethodFormat(methodName, args);
-            snippetMethod = getSnippetMethodFormat(methodName, args);
-            return {definition: met.definition, value: simplifiedMethod, snippet: snippetMethod, score: 1000, meta : met.meta, type: 'method'};
-        }));
-    },
-    getDocTooltip: function(item) {
-        if (item.type == 'method' && !item.docHTML) {
-            var methodIcon = "<span style=\"background: #CC00CC;display: inline-block;border-radius: 50%;height: 13px;width: 13px;font-size: 11px;line-height: 14px;text-align: center;color: white;\"><i>m</i></span>";
-            item.docHTML = "<h5 style=\"margin:0px;\">" + methodIcon + " <i>" + item.meta + "</i> - " + item.value + "</h5> <p style=\"margin:0px;word-wrap:break-word;\">" + item.definition + "</p>";
-        }
-    }
-};
-
-var staticFunctionsCompleter = {
-    getCompletions: function(editor, session, pos, prefix, callback) {
-        if(prefix.indexOf(".") === -1) {
-            return;
-        }
-
-        var functionsFile = GM_getResourceText("staticFunctions", "json");
-
-        prefix = prefix.substring(0, prefix.lastIndexOf("."));
-
-        var json = JSON.parse(functionsFile);
-
-        if(json.hasOwnProperty(prefix.toLowerCase())) {
-            callback(null, JSON.parse(functionsFile)[prefix.toLowerCase()].map(function(func) {
-                var method		= prefix + "." + func.signature;
-                var methodName 	= method.split('(')[0];
-                var args		= method.match(/\((.*?)\)/)[1];
-
-                simplifiedMethod = getSimplifiedMethodFormat(methodName, args);
-                snippetMethod = getSnippetMethodFormat(methodName, args);
-                return {definition: func.definition, value: simplifiedMethod, snippet: snippetMethod, score: 2000, meta : 'function', type: 'function'};
-            }));
-        }
-    },
-    getDocTooltip: function(item) {
-        if (item.type == 'function' && !item.docHTML) {
-            var functionIcon = "<span style=\"background: #7c7;display: inline-block;border-radius: 50%;height: 13px;width: 13px;font-size: 11px;line-height: 14px;text-align: center;color: white;\"><i>f</i></span>";
-            item.docHTML = "<h5 style=\"margin:0px;\">" + functionIcon + " <i>Function</i> - " + item.value + "</h5> <p style=\"margin:0px;word-wrap:break-word;\">" + item.definition + "</p>";
-        }
-    }
-};
-
 $('#rightpane').bind('DOMSubtreeModified', function() {
     var script = $('#scriptlocation').val();
     if($(CASE_EDITOR_SELECTOR).length !== 0 && scriptName != script) {
@@ -342,6 +198,8 @@ $('#rightpane').bind('DOMSubtreeModified', function() {
         GM_wait();
     }
 });
+
+// ### UTIL FUNCTIONS ###
 
 /**
  * Function to format the list of params and remove useless extension.
@@ -398,3 +256,206 @@ function getSnippetMethodFormat(methodName, argumentsString) {
     result.push(methodName, "(", snippet.join(", ") ,")");
     return result.join("");
 }
+
+function buildMethod(prefix, signature) {
+    if( ! prefix.endsWith(".") ) {
+        prefix += ".";
+    }
+
+    return prefix + signature;
+}
+
+function getMethodName(fullsignature) {
+    return fullsignature.split('(')[0];
+}
+
+function getMethodArgs(fullsignature) {
+    return fullsignature.match(/\((.*?)\)/)[1];
+}
+
+function countNumberDots(text) {
+    return (text.match(/\./g)||[]).length;
+}
+
+function hasDots(text) {
+    return countNumberDots(text) > 0;
+}
+
+function getPrefix(text) {
+    return text.substring(0, text.lastIndexOf("."));
+}
+
+// ### COMPLETERS ###
+
+/**
+ * Fill in the completer with scripts like : 
+ * 
+ * DAMO.Log.log(...) or DAMO.Util.getEnvironment(...)
+ * 
+ * Firstly, the function will be executed if and only if the prefix has at least 1 dot.
+ * Secondly, it will make an ajax call to retrieve a list of script based on the prefix.
+ * 
+ * If both conditions are met, the function will format the output and will add it to the completers.
+ * If not, nothing will happen.
+ */
+var scriptsCompleter = {
+    getCompletions: function(editor, session, pos, prefix, callback) {
+        if(! hasDots(prefix) ) return;
+
+        prefix = getPrefix(prefix);
+
+        $.ajax({
+            type: "GET",
+            url: "CaseAjax?getmethods=" + prefix,
+            dataType: "xml",
+            success: function(xml){
+                var completers = [];
+                if($(xml).find("responseXML").length == 1) {
+                    $(xml).find("class").each(function(){
+                        $(this).children().each(function(){
+                            var method		= buildMethod(prefix, $(this).text());
+                            var methodName 	= getMethodName(method);
+                            var args		= getMethodArgs(method);
+
+                            simplifiedMethod = getSimplifiedMethodFormat(methodName, args);
+                            snippetMethod    = getSnippetMethodFormat(methodName, args);
+                            completers.push({definition : simplifiedMethod, value : simplifiedMethod, snippet: snippetMethod, score : 1000, meta : 'script', type: 'script'});
+                        });
+                    });
+                }
+
+                callback(null, completers); return ;
+            }
+        });
+    },
+    getDocTooltip: function(item) {
+        if (item.type == 'script' && !item.docHTML) {
+            var scriptIcon = "<span style=\"background: red;display: inline-block;border-radius: 50%;height: 13px;width: 13px;font-size: 11px;line-height: 14px;text-align: center;color: white;\"><i>s</i></span>";
+            item.docHTML = "<h5 style=\"margin:0px;\">" + scriptIcon + " <i>Scripts</i> - " + item.definition + "</h5>";
+        }
+    }
+};
+
+/**
+ * Fill in the completer with functions like : 
+ * 
+ * optional(...) or doQuery(...)
+ * 
+ * Firstly, the function will be executed if and only if the prefix doesn't contain any dots.
+ * 
+ * If the condition is met, the function will format the output and will add it to the completers based on the ressource file.
+ * If not, nothing will happen.
+ */
+var functionsCompleter = {
+    getCompletions: function(editor, session, pos, prefix, callback) {
+        if( hasDots(prefix) ) return;
+
+        var ressourceFile = GM_getResourceText("functions", "json");
+
+        callback(null, JSON.parse(ressourceFile).functions.map(function(func) {
+            var method		= func.signature;
+            var methodName 	= getMethodName(method);
+            var args		= getMethodArgs(method);
+
+            simplifiedMethod = getSimplifiedMethodFormat(methodName, args);
+            snippetMethod    = getSnippetMethodFormat(methodName, args);
+            return {definition: func.definition, value: simplifiedMethod, snippet: snippetMethod, score: 1000, meta : 'function', type: 'function'};
+        }));
+    },
+    getDocTooltip: function(item) {
+        if (item.type == 'function' && !item.docHTML) {
+            var functionIcon = "<span style=\"background: #7c7;display: inline-block;border-radius: 50%;height: 13px;width: 13px;font-size: 11px;line-height: 14px;text-align: center;color: white;\"><i>f</i></span>";
+            item.docHTML = "<h5 style=\"margin:0px;\">" + functionIcon + " <i>Function</i> - " + item.value + "</h5> <p style=\"margin:0px;word-wrap:break-word;\">" + item.definition + "</p>";
+        }
+    }
+};
+
+/**
+ * Fill in the completer with Case360's built-in methods like : 
+ * 
+ * prefix.saveChanges(...) or prefix.add(...)
+ * 
+ * Firstly, the function will be executed if and only if the prefix has at least 1 dot.
+ * Secondly, it checks if the user is not looking for a case scripts. (e.g.: DAMO.Log.)
+ * 
+ * If both conditions are met, the function will format the output and will add it to the completers based on the ressource file.
+ * If not, nothing will happen.
+ */
+var methodsCompleter = {
+    getCompletions: function(editor, session, pos, prefix, callback) {
+        if(! hasDots(prefix) ) return;
+
+        prefix = getPrefix(prefix);
+
+        var isScriptSearch = false;
+        $.ajax({
+            type: "GET",
+            url: "CaseAjax?getmethods=" + prefix,
+            dataType: "xml",
+            async: false,
+            success: function(xml){
+                isScriptSearch = $(xml).find("responseXML").length == 1;
+            }
+        });
+
+        if(isScriptSearch) return;
+
+        var ressourceFile = GM_getResourceText("caseMethods", "json");
+
+        callback(null, JSON.parse(ressourceFile).methods.map(function(met) {
+            var method		= buildMethod(prefix, met.signature);
+            var methodName 	= getMethodName(method);
+            var args		= getMethodArgs(method);
+
+            simplifiedMethod = getSimplifiedMethodFormat(methodName, args);
+            snippetMethod    = getSnippetMethodFormat(methodName, args);
+            return {definition: met.definition, value: simplifiedMethod, snippet: snippetMethod, score: 1000, meta : met.meta, type: 'method'};
+        }));
+    },
+    getDocTooltip: function(item) {
+        if (item.type == 'method' && !item.docHTML) {
+            var methodIcon = "<span style=\"background: #CC00CC;display: inline-block;border-radius: 50%;height: 13px;width: 13px;font-size: 11px;line-height: 14px;text-align: center;color: white;\"><i>m</i></span>";
+            item.docHTML = "<h5 style=\"margin:0px;\">" + methodIcon + " <i>" + item.meta + "</i> - " + item.value + "</h5> <p style=\"margin:0px;word-wrap:break-word;\">" + item.definition + "</p>";
+        }
+    }
+};
+
+/**
+ * Fill in the completer with static functions/methods like : 
+ * 
+ * WorkItem.find(...) or User.find(...)
+ * 
+ * Firstly, the function will be executed if and only if the prefix has 1 dot.
+ * Secondly, it checks if the prefix exists as key in the ressource file.
+ * 
+ * If both conditions are met, the function will format the output and will add it to the completers.
+ * If not, nothing will happen.
+ */
+var staticFunctionsCompleter = {
+    getCompletions: function(editor, session, pos, prefix, callback) {
+        if( countNumberDots(prefix) !== 1 ) return;
+        
+        prefix = getPrefix(prefix);
+        
+        var ressourceFile = GM_getResourceText("staticFunctions", "json");
+        var jsonString = JSON.parse(ressourceFile);
+
+        if(jsonString.hasOwnProperty(prefix.toLowerCase())) {
+            callback(null, jsonString[prefix.toLowerCase()].map(function(func) {
+                var method		= buildMethod(prefix, func.signature);
+                var methodName 	= getMethodName(method);
+                var args		= getMethodArgs(method);
+
+                simplifiedMethod = getSimplifiedMethodFormat(methodName, args);
+                snippetMethod    = getSnippetMethodFormat(methodName, args);
+                return {definition: func.definition, value: simplifiedMethod, snippet: snippetMethod, score: 2000, meta : func.meta, type: 'staticFunction'};
+            }));
+        }
+    },
+    getDocTooltip: function(item) {
+        if (item.type == 'staticFunction' && !item.docHTML) {
+            var functionIcon = "<span style=\"background: #ffae19;display: inline-block;border-radius: 50%;height: 13px;width: 13px;font-size: 11px;line-height: 14px;text-align: center;color: white;\"><i>f</i></span>";
+            item.docHTML = "<h5 style=\"margin:0px;\">" + functionIcon + " <i>" + item.meta + "</i> - " + item.value + "</h5> <p style=\"margin:0px;word-wrap:break-word;\">" + item.definition + "</p>";
+        }
+    }
+};
