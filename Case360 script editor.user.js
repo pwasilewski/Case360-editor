@@ -10,8 +10,9 @@
 // @supportURL   https://github.com/pwasilewski/Case360-editor
 // @updateURL    https://raw.githubusercontent.com/pwasilewski/Case360-editor/master/Case360%20script%20editor.user.js
 // @downloadURL  https://raw.githubusercontent.com/pwasilewski/Case360-editor/master/Case360%20script%20editor.user.js
-// @resource     functions https://raw.githubusercontent.com/pwasilewski/Case360-editor/v0.4/functions.json
-// @resource     caseMethods https://raw.githubusercontent.com/pwasilewski/Case360-editor/v0.4/methods.json
+// @resource     functions       https://raw.githubusercontent.com/pwasilewski/Case360-editor/v0.4/functions.json
+// @resource     caseMethods     https://raw.githubusercontent.com/pwasilewski/Case360-editor/v0.4/methods.json
+// @resource     staticFunctions https://raw.githubusercontent.com/pwasilewski/Case360-editor/v0.4/static_functions.json
 // @grant        GM_getResourceText
 // @require      https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js
 // @require      https://openuserjs.org/src/libs/sizzle/GM_config.js
@@ -183,6 +184,7 @@ function GM_initializeEditor() {
     langTools.addCompleter(scriptsCompleter);
     langTools.addCompleter(functionsCompleter);
     langTools.addCompleter(methodsCompleter);
+    langTools.addCompleter(staticFunctionsCompleter);
 }
 
 var scriptsCompleter = {
@@ -293,6 +295,38 @@ var methodsCompleter = {
         if (item.type == 'method' && !item.docHTML) {
             var methodIcon = "<span style=\"background: #CC00CC;display: inline-block;border-radius: 50%;height: 13px;width: 13px;font-size: 11px;line-height: 14px;text-align: center;color: white;\"><i>m</i></span>";
             item.docHTML = "<h5 style=\"margin:0px;\">" + methodIcon + " <i>" + item.meta + "</i> - " + item.value + "</h5> <p style=\"margin:0px;word-wrap:break-word;\">" + item.definition + "</p>";
+        }
+    }
+};
+
+var staticFunctionsCompleter = {
+    getCompletions: function(editor, session, pos, prefix, callback) {
+        if(prefix.indexOf(".") === -1) {
+            return;
+        }
+
+        var functionsFile = GM_getResourceText("staticFunctions", "json");
+
+        prefix = prefix.substring(0, prefix.lastIndexOf("."));
+
+        var json = JSON.parse(functionsFile);
+
+        if(json.hasOwnProperty(prefix.toLowerCase())) {
+            callback(null, JSON.parse(functionsFile)[prefix.toLowerCase()].map(function(func) {
+                var method		= prefix + "." + func.signature;
+                var methodName 	= method.split('(')[0];
+                var args		= method.match(/\((.*?)\)/)[1];
+
+                simplifiedMethod = getSimplifiedMethodFormat(methodName, args);
+                snippetMethod = getSnippetMethodFormat(methodName, args);
+                return {definition: func.definition, value: simplifiedMethod, snippet: snippetMethod, score: 2000, meta : 'function', type: 'function'};
+            }));
+        }
+    },
+    getDocTooltip: function(item) {
+        if (item.type == 'function' && !item.docHTML) {
+            var functionIcon = "<span style=\"background: #7c7;display: inline-block;border-radius: 50%;height: 13px;width: 13px;font-size: 11px;line-height: 14px;text-align: center;color: white;\"><i>f</i></span>";
+            item.docHTML = "<h5 style=\"margin:0px;\">" + functionIcon + " <i>Function</i> - " + item.value + "</h5> <p style=\"margin:0px;word-wrap:break-word;\">" + item.definition + "</p>";
         }
     }
 };
