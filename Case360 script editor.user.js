@@ -258,10 +258,12 @@ var methodsCompleter = {
             return;
         }
 
+        prefix = prefix.substring(0, prefix.lastIndexOf("."));
+
         var isScriptSearch = false;
         $.ajax({
             type: "GET",
-            url: "CaseAjax?getmethods=" + prefix.substring(0, prefix.lastIndexOf(".")),
+            url: "CaseAjax?getmethods=" + prefix,
             dataType: "xml",
             async: false,
             success: function(xml){
@@ -274,6 +276,8 @@ var methodsCompleter = {
         }
 
         var methodsFile = GM_getResourceText("caseMethods", "json");
+
+        prefix += ".";
 
         callback(null, JSON.parse(methodsFile).methods.map(function(met) {
             var method		= prefix + met.signature;
