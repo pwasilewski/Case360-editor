@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Case360 script editor - DEV
+// @name         Case360 script editor
 // @namespace    http://tampermonkey.net/
 // @version      0.4
 // @author       P. Wasilewski
@@ -10,9 +10,9 @@
 // @supportURL   https://github.com/pwasilewski/Case360-editor
 // @updateURL    https://raw.githubusercontent.com/pwasilewski/Case360-editor/master/Case360%20script%20editor.user.js
 // @downloadURL  https://raw.githubusercontent.com/pwasilewski/Case360-editor/master/Case360%20script%20editor.user.js
-// @resource     functions       https://raw.githubusercontent.com/pwasilewski/Case360-editor/v0.4/functions.json
-// @resource     caseMethods     https://raw.githubusercontent.com/pwasilewski/Case360-editor/v0.4/methods.json
-// @resource     staticFunctions https://raw.githubusercontent.com/pwasilewski/Case360-editor/v0.4/static_functions.json
+// @resource     functions       https://raw.githubusercontent.com/pwasilewski/Case360-editor/master/functions.json
+// @resource     caseMethods     https://raw.githubusercontent.com/pwasilewski/Case360-editor/master/methods.json
+// @resource     staticFunctions https://raw.githubusercontent.com/pwasilewski/Case360-editor/master/static_functions.json
 // @grant        GM_getResourceText
 // @require      https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js
 // @require      https://openuserjs.org/src/libs/sizzle/GM_config.js
