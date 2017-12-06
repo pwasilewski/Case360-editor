@@ -1,0 +1,98 @@
+{
+    "filestore":[
+        {
+            "signature":"find(Decimal decimalId)",
+            "definition":"Filestore, returns the Filestore object for the specified ID.",
+			"meta":"Static Filestore"
+        },
+        {
+            "signature":"find(String repositoryKey)",
+            "definition":"Filestore, returns the Filestore object referenced by repositoryKey. If you are not sure what type of object is referenced by repositoryKey use RepositoryObject.find instead.",
+			"meta":"Static Filestore"
+        }
+    ],
+    "casefolder":[
+        {
+            "signature":"find(Decimal decimalId)",
+            "definition":"Casefolder, returns the Casefolder object for the specified ID.",
+			"meta":"Static Casefolder"
+        },
+        {
+            "signature":"find(String repositoryKey)",
+            "definition":"Casefolder, returns the Casefolder object referenced by repositoryKey. If you are not sure what type of object is referenced by repositoryKey use RepositoryObject.find instead.",
+			"meta":"Static Casefolder"
+        }
+    ],
+    "workitem":[
+        {
+            "signature":"find(Integer workflowId, BigDecimal workitemId)",
+            "definition":"Workitem, returns the process instance object for the specified process and workitem IDs.",
+			"meta":"Static Workitem"
+        },
+        {
+            "signature":"find(Integer workflowId, BigDecimal workitemId, BigDecimal envelopeId)",
+            "definition":"Workitem, returns the process instance object for the specified process, workitem, and envelope IDs.",
+			"meta":"Static Workitem"
+        },
+        {
+            "signature":"find(String repositoryKey)",
+            "definition":"Workitem, returns the process instance object referenced by repositoryKey. If you are not sure what type of object is referenced by repositoryKey use RepositoryObject.find instead.",
+			"meta":"Static Workitem"
+        }
+    ],
+    "formData":[
+        {
+            "signature":"find(Decimal templateId, Decimal rowId)",
+            "definition":"Formdata, returns the formdata object for the specified form instance of the specified type.",
+			"meta":"Static FormData"
+        },
+        {
+            "signature":"find(String repositoryKey)",
+            "definition":"Formdata, returns the formdata object referenced by repositoryKey. If you are not sure what type of object is referenced by repositoryKey use RepositoryObject.find instead.",
+			"meta":"Static FormData"
+        }
+    ],
+    "externalObject":[
+        {
+            "signature":"find(String repositoryKey)",
+            "definition":"ExternalObject, returns the external object referenced by repositoryKey. If you are not sure what type of object is referenced by repositoryKey use RepositoryObject.find instead.",
+			"meta":"Static ExternalObject"
+        }
+    ],
+    "repositoryObject":[
+        {
+            "signature":"find(String repositoryKey)",
+            "definition":"RepositoryObject, returns the object referenced by repositoryKey. You can cast the returned object into the various object types. The case operator returns null if the object returned is not the correct type. You can determine the type of the object by using a sequence of casts.",
+			"meta":"Static RepositoryObject"
+        }
+    ],
+    "user":[
+        {
+            "signature":"find(String userLoginId)",
+            "definition":"User, returns the user object for the specified log in ID.",
+			"meta":"Static User"
+        }
+    ],
+    "workCalendar":[
+        {
+            "signature":"getDefault()",
+            "definition":"WorkCalendar that is the current default calendar in a script that is being used for business calendar calculations.",
+			"meta":"Static WorkCalendar"
+        },
+        {
+            "signature":"setDefault(String name)",
+            "definition":"In a script, sets the default work calendar, and time zone and locale, to be used for all subsequent calendar calculations. Returns the WorkCalendar that was formerly the default calendar.",
+			"meta":"Static WorkCalendar"
+        },
+        {
+            "signature":"setDefault(WorkCalendar workCalendar)",
+            "definition":"WorkCalendar",
+			"meta":"Static WorkCalendar"
+        },
+        {
+            "signature":"find(String name)",
+            "definition":"WorkCalendar object that matches the given calendar name, or null if a calendar of that name doesn't exist.",
+			"meta":"Static WorkCalendar"
+        }
+    ]
+}

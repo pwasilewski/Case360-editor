@@ -1,0 +1,152 @@
+{
+    "functions":[
+        {
+            "signature":"date(year, month, day)",
+            "definition":"A date with the specified year, month, and day."
+        },
+        {
+            "signature":"date(year, month, day, hour, minute)",
+            "definition":"A date with the specified year, month, and day and time."
+        },
+        {
+            "signature":"date(year, month, day, hour, minute, second)",
+            "definition":"A date with the specified year, month, and day and time including seconds."
+        },
+        {
+            "signature":"dateEaster(year)",
+            "definition":"The date of the Easter holiday for the given year. This method is provided because the calculation needed is complex enough to warrant a built-in method."
+        },
+        {
+            "signature":"time(hour, minute)",
+            "definition":"A time with the specified hour and minute (hours are specified as a 24 hour clock)."
+        },
+        {
+            "signature":"time(hour, minute, second)",
+            "definition":"A time with the specified hour, minute and second."
+        },
+        {
+            "signature":"time(timezone, locale, hour, minute)",
+            "definition":"A time with the specified hour and minute (hours are specified as a 24 hour clock), in the specified timezone and locale."
+        },
+        {
+            "signature":"time(timezone, locale, hour, minute)",
+            "definition":"A time with the specified hour and minute (hours are specified as a 24 hour clock), in the specified timezone and locale."
+        },
+        {
+            "signature":"time(timezone, locale, hour, minute, second)",
+            "definition":"A time with the specified hour and minute and second (hours are specified as a 24 hour clock), in the specified timezone and locale."
+        },
+        {
+            "signature":"optional(arg)",
+            "definition":"If arg is not null, returns arg, otherwise depends on the variable's type."
+        },
+        {
+            "signature":"optional(arg, default)",
+            "definition":"If arg is null, returns the specified default value."
+        },
+        {
+            "signature":"random(low, hi)",
+            "definition":"Returns a random number between low and hi (inclusive)."
+        },
+        {
+            "signature":"countTrue(list)",
+            "definition":"This function returns the number of true values in a specified list. This function only accepts Boolean lists."
+        },
+        {
+            "signature":"countTrueN(list1)",
+            "definition":"The null aware version of countTrue returns a range of possible true counts, with the lower value the number of entries in the list that are currently true, and the higher value the currently true count, plus the count of entries that are currently null."
+        },
+        {
+            "signature":"percentTrue(list)",
+            "definition":"This function returns the percentage (an integer from 0 to 100) of true values in the specified list. This function only accepts Boolean lists."
+        },
+        {
+            "signature":"percentTrueN(list)",
+            "definition":"The null aware version of percentTrue returns a range of possible percentages, with the lower value the percentage of entries in the list that are currently true, and the higher value the percentage of entries that are true or null (that may become true when filled in)."
+        },
+        {
+            "signature":"sum(list)",
+            "definition":"This function returns the sum of all values in the list. This function accepts lists of integer, long or decimal values. Any null values are ignored."
+        },
+        {
+            "signature":"sumN(list)",
+            "definition":"The null aware version of sum returns null if any value in the list is null."
+        },
+        {
+            "signature":"average(list)",
+            "definition":"This function returns the average of all values in the list. This function accepts lists of integer, long, decimal or date values. Any null values are ignored."
+        },
+        {
+            "signature":"averageN(list)",
+            "definition":"The null aware version of average returns null if any value in the list is null."
+        },
+        {
+            "signature":"median(list)",
+            "definition":"This function returns the median of all values in the list. This function accepts lists of integer, long, decimal or date values. Any null values are ignored."
+        },
+        {
+            "signature":"medianN(list)",
+            "definition":"The null aware version of median returns null if any value in the list is null."
+        },
+        {
+            "signature":"min(list)",
+            "definition":"This function returns the minimum value in the list. This function accepts lists of integer, long, decimal or date values. Any null values are ignored."
+        },
+        {
+            "signature":"minN(list)",
+            "definition":"The null aware version of min returns null if any value in the list is null."
+        },
+        {
+            "signature":"max(list)",
+            "definition":"This function returns the maximum value in the list. This function accepts lists of integer, long, decimal or date values. Any null values are ignored."
+        },
+        {
+            "signature":"maxN(list)",
+            "definition":"The null aware version of max returns null if any value in the list is null."
+        },
+        {
+            "signature":"mode(list)",
+            "definition":"This function returns the mode of the specified list. The mode is the most frequently occurring value in the list. This function supports integer, long, decimal or date lists. If two values occur the same number of times, it returns the value that occurs first in a sorted list of the values. If no value occurs more than once, it returns null. Any null values are ignored. "
+        },
+        {
+            "signature":"modeN(list)",
+            "definition":"The null aware version of mode may return a value even if nulls exist in the list, if the leading candidate has an overwhelming lead (if it occurs more frequently than the next leading candidate plus the number of null values)."
+        },
+        {
+            "signature":"traceOn(String logFolder)",
+            "definition":"Void, turns on script tracing, creating a log file in the specified folder."
+        },
+        {
+            "signature":"traceOn(String logFolder, Boolean doTraceIntoScripts)",
+            "definition":"Void, turns on script tracing, creating a log file in the specified folder, and specifying whether to trace into called scripts (default = false)."
+        },
+        {
+            "signature":"traceOff()",
+            "definition":"Void, turns off script tracing, closing the log file."
+        },
+        {
+            "signature":"setScriptTimeOut(long time) ",
+            "definition":"Sets script timeout in milliseconds"
+        },
+        {
+            "signature":"system.out.println(String msg)",
+            "definition":"Void, writes the specified string to the console."
+        },
+        {
+            "signature":"error(String message)",
+            "definition":"Void, terminates the script with the specified error message. When called from a the catch block of a try-catch statement, this will throw a new UtilityException with the original exception linked in as the initCause. If the message is null, then the original exception is rethrown."
+        },
+        {
+            "signature":"error(String category, String message)",
+            "definition":" Void, terminates the script with the specified error message and writes the specified error message to the log with the specified log category (the message may or may not actually appear in the log depending on the server's log configuration). When called from a the catch block of a try-catch statement, this will throw a new UtilityException with the original exception linked in as the initCause. If the message is null, then the original exception is rethrown."
+        },
+        {
+            "signature":"doQuery(String queryScriptName)",
+            "definition":"Returns FmsRowSet with the collection of result rows."
+        },
+        {
+            "signature":"doQuery(String queryScriptName, PropertyMap parameters)",
+            "definition":"Returns FmsRowSet with the collection of result rows."
+        }
+    ]
+}
