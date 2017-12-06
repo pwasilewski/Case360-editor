@@ -8,7 +8,7 @@ The default Case360 editor can be a real pain in the ass so I decide to replace 
 
 ## Installation
 
-You can check the complete guide just right [there](https://github.com/pwasilewski/Case360-editor/wiki/Installation)
+You can check the complete guide just right [there](https://github.com/pwasilewski/Case360-editor/wiki/1.0-Installation)
 
 ## What does it offer
 
