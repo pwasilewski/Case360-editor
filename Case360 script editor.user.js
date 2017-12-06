@@ -22,7 +22,7 @@
 // @grant        GM_registerMenuCommand
 // ==/UserScript==
 
-const ACE_CONFIG = '{"id":"GM_config","title":"Case360 script editor config","fields":{"repository":{"label":"Ace repository","type":"text","default":"ace/"},"theme":{"label":"Theme","type":"select","default":"piwi","options":["ambiance","chaos","chrome","clouds","clouds_midnight","cobalt","crimson_editor","dawn","dracula","dreamweaver","eclipse","github","gob","gruvbox","idle_fingers","iplastic","katzenmilch","kr_theme","kuroir","merbivore","merbivore_soft","monokai","mono_industrial","notepad","pastel_on_dark","piwi","solarized_dark","solarized_light","sqlserver","terminal","textmate","tomorrow","tomorrow_night","tomorrow_night_blue","tomorrow_night_bright","tomorrow_night_eighties","twilight","vibrant_ink","xcode"]},"hline":{"label":"Show horizontal line","type":"checkbox","default":true}}}';
+const ACE_CONFIG = '{ "id":"GM_config", "title":"Case360 script editor config", "fields":{ "repository":{ "label":"Ace repository", "type":"text", "default":"ace/" }, "theme":{ "label":"Theme", "type":"select", "default":"piwi", "options":[ "ambiance", "chaos", "chrome", "clouds", "clouds_midnight", "cobalt", "crimson_editor", "dawn", "dracula", "dreamweaver", "eclipse", "github", "gob", "gruvbox", "idle_fingers", "iplastic", "katzenmilch", "kr_theme", "kuroir", "merbivore", "merbivore_soft", "monokai", "mono_industrial", "notepad", "pastel_on_dark", "piwi", "solarized_dark", "solarized_light", "sqlserver", "terminal", "textmate", "tomorrow", "tomorrow_night", "tomorrow_night_blue", "tomorrow_night_bright", "tomorrow_night_eighties", "twilight", "vibrant_ink", "xcode" ] }, "hline":{ "label":"Show horizontal line", "type":"checkbox", "default":true }, "showSnippets":{ "label":"Show snippets", "type":"checkbox", "default":true }, "showScriptCompleter":{ "label":"Show scripts completer", "type":"checkbox", "default":true }, "showFunctionCompleter":{ "label":"Show functions completer", "type":"checkbox", "default":true }, "showStaticFunctionCompleter":{ "label":"Show static functions completer", "type":"checkbox", "default":true }, "showMethodCompleter":{ "label":"Show methods completer", "type":"checkbox", "default":true } } }';
 
 GM_config.init($.parseJSON (ACE_CONFIG));
 
@@ -153,7 +153,7 @@ function GM_initializeEditor() {
 
     editor.setOptions({
         enableBasicAutocompletion: true,
-        enableSnippets : true,
+        enableSnippets : GM_config.get("showSnippets"),
         showPrintMargin : GM_config.get("hline")
     });
 
@@ -181,10 +181,18 @@ function GM_initializeEditor() {
         GM_compileScript();
     });
 
-    langTools.addCompleter(scriptsCompleter);
-    langTools.addCompleter(functionsCompleter);
-    langTools.addCompleter(methodsCompleter);
-    langTools.addCompleter(staticFunctionsCompleter);
+    if(GM_config.get("showScriptCompleter")){
+        langTools.addCompleter(scriptsCompleter);
+    }
+    if(GM_config.get("showFunctionCompleter")){
+        langTools.addCompleter(functionsCompleter);
+    }
+    if(GM_config.get("showMethodCompleter")){
+        langTools.addCompleter(methodsCompleter);
+    }
+    if(GM_config.get("showStaticFunctionCompleter")){
+        langTools.addCompleter(staticFunctionsCompleter);
+    }
 }
 
 $('#rightpane').bind('DOMSubtreeModified', function() {
@@ -288,13 +296,13 @@ function getPrefix(text) {
 // ### COMPLETERS ###
 
 /**
- * Fill in the completer with scripts like : 
- * 
+ * Fill in the completer with scripts like :
+ *
  * DAMO.Log.log(...) or DAMO.Util.getEnvironment(...)
- * 
+ *
  * Firstly, the function will be executed if and only if the prefix has at least 1 dot.
  * Secondly, it will make an ajax call to retrieve a list of script based on the prefix.
- * 
+ *
  * If both conditions are met, the function will format the output and will add it to the completers.
  * If not, nothing will happen.
  */
@@ -337,12 +345,12 @@ var scriptsCompleter = {
 };
 
 /**
- * Fill in the completer with functions like : 
- * 
+ * Fill in the completer with functions like :
+ *
  * optional(...) or doQuery(...)
- * 
+ *
  * Firstly, the function will be executed if and only if the prefix doesn't contain any dots.
- * 
+ *
  * If the condition is met, the function will format the output and will add it to the completers based on the ressource file.
  * If not, nothing will happen.
  */
@@ -371,13 +379,13 @@ var functionsCompleter = {
 };
 
 /**
- * Fill in the completer with Case360's built-in methods like : 
- * 
+ * Fill in the completer with Case360's built-in methods like :
+ *
  * prefix.saveChanges(...) or prefix.add(...)
- * 
+ *
  * Firstly, the function will be executed if and only if the prefix has at least 1 dot.
  * Secondly, it checks if the user is not looking for a case scripts. (e.g.: DAMO.Log.)
- * 
+ *
  * If both conditions are met, the function will format the output and will add it to the completers based on the ressource file.
  * If not, nothing will happen.
  */
@@ -421,22 +429,22 @@ var methodsCompleter = {
 };
 
 /**
- * Fill in the completer with static functions/methods like : 
- * 
+ * Fill in the completer with static functions/methods like :
+ *
  * WorkItem.find(...) or User.find(...)
- * 
+ *
  * Firstly, the function will be executed if and only if the prefix has 1 dot.
  * Secondly, it checks if the prefix exists as key in the ressource file.
- * 
+ *
  * If both conditions are met, the function will format the output and will add it to the completers.
  * If not, nothing will happen.
  */
 var staticFunctionsCompleter = {
     getCompletions: function(editor, session, pos, prefix, callback) {
         if( countNumberDots(prefix) !== 1 ) return;
-        
+
         prefix = getPrefix(prefix);
-        
+
         var ressourceFile = GM_getResourceText("staticFunctions", "json");
         var jsonString = JSON.parse(ressourceFile);
 
