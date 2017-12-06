@@ -32,6 +32,6 @@ I added the `Ctrl-S` to **Save** the current script.
 This is still in progress but you already have access to local variable in the current script and also I added some interesting snippet to create/find an object or to create easily `for-each` loops, ...
 
 
-## Version 0.3
+## Current version: 0.4
 
 Don't hesitate to take a look at the [release notes](https://github.com/pwasilewski/Case360-editor/wiki) to see the changes !
